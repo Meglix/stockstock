@@ -1,0 +1,45 @@
+alert_type,priority,sku,location_id,city,message
+stockout_risk,high,PEU-WF-WINTER-5L,FI_HEL,Helsinki,Lichid parbriz iarna -20C 5L are acoperire estimata de 3.74 zile; recomandare order 836 buc.
+stockout_risk,high,PEU-WF-WINTER-5L,SE_STO,Stockholm,Lichid parbriz iarna -20C 5L are acoperire estimata de 4.36 zile; recomandare order 760 buc.
+stockout_risk,high,PEU-WF-WINTER-5L,EE_TLL,Tallinn,Lichid parbriz iarna -20C 5L are acoperire estimata de 4.57 zile; recomandare order 772 buc.
+stockout_risk,high,PEU-WINTER-TIRE-205,FI_HEL,Helsinki,Anvelopa iarna 205/55R16 are acoperire estimata de 8.76 zile; recomandare order 293 buc.
+stockout_risk,high,PEU-WINTER-TIRE-205,SE_STO,Stockholm,Anvelopa iarna 205/55R16 are acoperire estimata de 9.61 zile; recomandare order 265 buc.
+stockout_risk,high,PEU-WINTER-TIRE-205,EE_TLL,Tallinn,Anvelopa iarna 205/55R16 are acoperire estimata de 10.73 zile; recomandare order 235 buc.
+stockout_risk,high,PEU-WF-WINTER-5L,DE_BER,Berlin,Lichid parbriz iarna -20C 5L are acoperire estimata de 11.01 zile; recomandare order 355 buc.
+stockout_risk,high,PEU-WF-WINTER-5L,PL_WAW,Warsaw,Lichid parbriz iarna -20C 5L are acoperire estimata de 11.45 zile; recomandare order 342 buc.
+stockout_risk,high,PEU-WF-WINTER-5L,RO_BUC,Bucharest,Lichid parbriz iarna -20C 5L are acoperire estimata de 11.74 zile; recomandare order 335 buc.
+stockout_risk,high,PEU-WF-WINTER-5L,CZ_PRG,Prague,Lichid parbriz iarna -20C 5L are acoperire estimata de 11.88 zile; recomandare order 328 buc.
+stockout_risk,high,PEU-WINTER-TIRE-205,PL_WAW,Warsaw,Anvelopa iarna 205/55R16 are acoperire estimata de 18.18 zile; recomandare order 111 buc.
+stockout_risk,high,PEU-WINTER-TIRE-205,DE_BER,Berlin,Anvelopa iarna 205/55R16 are acoperire estimata de 18.75 zile; recomandare order 102 buc.
+stockout_risk,high,PEU-WINTER-TIRE-205,CZ_PRG,Prague,Anvelopa iarna 205/55R16 are acoperire estimata de 19.0 zile; recomandare order 101 buc.
+stockout_risk,high,PEU-WINTER-TIRE-205,RO_BUC,Bucharest,Anvelopa iarna 205/55R16 are acoperire estimata de 19.7 zile; recomandare order 92 buc.
+stockout_risk,high,PEU-WINTER-TIRE-205,DK_CPH,Copenhagen,Anvelopa iarna 205/55R16 are acoperire estimata de 20.38 zile; recomandare order 44 buc.
+stockout_risk,high,PEU-WINTER-TIRE-205,FR_PAR,Paris,Anvelopa iarna 205/55R16 are acoperire estimata de 20.91 zile; recomandare order 81 buc.
+stockout_risk,medium,PEU-WF-WINTER-5L,DK_CPH,Copenhagen,Lichid parbriz iarna -20C 5L are acoperire estimata de 14.29 zile; recomandare order 240 buc.
+stockout_risk,medium,PEU-WINTER-TIRE-205,NL_AMS,Amsterdam,Anvelopa iarna 205/55R16 are acoperire estimata de 21.82 zile; recomandare order 72 buc.
+stockout_risk,medium,PEU-WINTER-TIRE-205,IT_MIL,Milan,Anvelopa iarna 205/55R16 are acoperire estimata de 23.13 zile; recomandare order 60 buc.
+stockout_risk,medium,PEU-WINTER-TIRE-205,ES_MAD,Madrid,Anvelopa iarna 205/55R16 are acoperire estimata de 23.59 zile; recomandare order 56 buc.
+overstock,medium,PEU-AC-REFILL,FI_HEL,Helsinki,Kit incarcare clima R134a/R1234yf are surplus estimat; reduce/transfer 180 buc.
+overstock,medium,PEU-AC-REFILL,FR_PAR,Paris,Kit incarcare clima R134a/R1234yf are surplus estimat; reduce/transfer 182 buc.
+overstock,medium,PEU-AC-REFILL,SE_STO,Stockholm,Kit incarcare clima R134a/R1234yf are surplus estimat; reduce/transfer 183 buc.
+overstock,medium,PEU-AC-REFILL,EE_TLL,Tallinn,Kit incarcare clima R134a/R1234yf are surplus estimat; reduce/transfer 186 buc.
+overstock,medium,PEU-AC-REFILL,NL_AMS,Amsterdam,Kit incarcare clima R134a/R1234yf are surplus estimat; reduce/transfer 183 buc.
+overstock,medium,PEU-AC-REFILL,IT_MIL,Milan,Kit incarcare clima R134a/R1234yf are surplus estimat; reduce/transfer 185 buc.
+overstock,medium,PEU-AC-REFILL,DK_CPH,Copenhagen,Kit incarcare clima R134a/R1234yf are surplus estimat; reduce/transfer 184 buc.
+overstock,medium,PEU-AC-REFILL,CZ_PRG,Prague,Kit incarcare clima R134a/R1234yf are surplus estimat; reduce/transfer 184 buc.
+overstock,medium,PEU-AC-REFILL,RO_BUC,Bucharest,Kit incarcare clima R134a/R1234yf are surplus estimat; reduce/transfer 188 buc.
+overstock,medium,PEU-AC-REFILL,PL_WAW,Warsaw,Kit incarcare clima R134a/R1234yf are surplus estimat; reduce/transfer 186 buc.
+overstock,medium,PEU-AC-REFILL,DE_BER,Berlin,Kit incarcare clima R134a/R1234yf are surplus estimat; reduce/transfer 185 buc.
+overstock,medium,PEU-AC-REFILL,ES_MAD,Madrid,Kit incarcare clima R134a/R1234yf are surplus estimat; reduce/transfer 187 buc.
+overstock,medium,PEU-SUMMER-TIRE-205,EE_TLL,Tallinn,Anvelopa vara 205/55R16 are surplus estimat; reduce/transfer 175 buc.
+overstock,medium,PEU-SUMMER-TIRE-205,FI_HEL,Helsinki,Anvelopa vara 205/55R16 are surplus estimat; reduce/transfer 176 buc.
+overstock,medium,PEU-SUMMER-TIRE-205,SE_STO,Stockholm,Anvelopa vara 205/55R16 are surplus estimat; reduce/transfer 177 buc.
+overstock,medium,PEU-SUMMER-TIRE-205,DK_CPH,Copenhagen,Anvelopa vara 205/55R16 are surplus estimat; reduce/transfer 176 buc.
+overstock,medium,PEU-SUMMER-TIRE-205,ES_MAD,Madrid,Anvelopa vara 205/55R16 are surplus estimat; reduce/transfer 178 buc.
+overstock,medium,PEU-SUMMER-TIRE-205,PL_WAW,Warsaw,Anvelopa vara 205/55R16 are surplus estimat; reduce/transfer 178 buc.
+overstock,medium,PEU-SUMMER-TIRE-205,FR_PAR,Paris,Anvelopa vara 205/55R16 are surplus estimat; reduce/transfer 178 buc.
+overstock,medium,PEU-SUMMER-TIRE-205,IT_MIL,Milan,Anvelopa vara 205/55R16 are surplus estimat; reduce/transfer 179 buc.
+overstock,medium,PEU-SUMMER-TIRE-205,NL_AMS,Amsterdam,Anvelopa vara 205/55R16 are surplus estimat; reduce/transfer 179 buc.
+overstock,medium,PEU-SUMMER-TIRE-205,DE_BER,Berlin,Anvelopa vara 205/55R16 are surplus estimat; reduce/transfer 178 buc.
+overstock,medium,PEU-SUMMER-TIRE-205,CZ_PRG,Prague,Anvelopa vara 205/55R16 are surplus estimat; reduce/transfer 178 buc.
+overstock,medium,PEU-SUMMER-TIRE-205,RO_BUC,Bucharest,Anvelopa vara 205/55R16 are surplus estimat; reduce/transfer 181 buc.

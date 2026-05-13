@@ -1,0 +1,24 @@
+{
+  "generated_at_utc": "2026-05-12T08:46:04Z",
+  "horizon_days": 21,
+  "features_added": [
+    "dealer_alert_center",
+    "stock_risk_reorder_engine",
+    "product_sensitivity_profiles",
+    "forecast_scenarios",
+    "dealer_risk_map",
+    "model_explainability",
+    "model_monitoring",
+    "data_integrations_catalog"
+  ],
+  "row_counts": {
+    "dealer_alerts": 2,
+    "stock_risk_rows": 216,
+    "sensitivity_profiles": 216,
+    "scenario_rows": 216,
+    "risk_map_locations": 12,
+    "explainability_rows": 2,
+    "integrations": 10
+  },
+  "output_dir": "data\\processed\\decision_layer"
+}

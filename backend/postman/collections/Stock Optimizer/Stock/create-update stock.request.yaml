@@ -1,0 +1,24 @@
+$kind: http-request
+name: 'Create / Update Stock'
+method: POST
+url: '{{base_url}}/stock'
+order: 3000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "part_id": 1,
+      "location": "Bucharest",
+      "location_id": "RO_BUC",
+      "city": "Bucharest",
+      "country_code": "RO",
+      "current_stock": 120,
+      "reorder_point": 40,
+      "safety_stock": 20,
+      "optimal_stock": 150,
+      "min_order_qty": 10,
+      "lead_time_days": 5
+    }

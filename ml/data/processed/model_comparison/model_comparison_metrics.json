@@ -1,0 +1,45 @@
+{
+  "generated_at_utc": "2026-05-12T08:45:25Z",
+  "comparison_scope": "same validation window used by train_forecast_model",
+  "validation_start_date": "2025-11-17",
+  "validation_end_date": "2025-12-31",
+  "best_model_by_WAPE": "ExtraTrees global raw",
+  "results": [
+    {
+      "model_name": "ExtraTrees global raw",
+      "MAE": 0.516,
+      "RMSE": 0.8222,
+      "MAPE_percent": 7.1335,
+      "WAPE_percent": 5.8304,
+      "bias_units": -0.0848,
+      "R2": 0.9872
+    },
+    {
+      "model_name": "ExtraTrees global + local guard",
+      "MAE": 0.516,
+      "RMSE": 0.8222,
+      "MAPE_percent": 7.1335,
+      "WAPE_percent": 5.8304,
+      "bias_units": -0.0848,
+      "R2": 0.9872
+    },
+    {
+      "model_name": "Final guarded forecast",
+      "MAE": 0.516,
+      "RMSE": 0.8222,
+      "MAPE_percent": 7.1335,
+      "WAPE_percent": 5.8304,
+      "bias_units": -0.0848,
+      "R2": 0.9872
+    },
+    {
+      "model_name": "Baseline rolling_mean_28",
+      "MAE": 1.0389,
+      "RMSE": 1.636,
+      "MAPE_percent": 12.9452,
+      "WAPE_percent": 11.7392,
+      "bias_units": 0.0911,
+      "R2": 0.9494
+    }
+  ]
+}

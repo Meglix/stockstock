@@ -1,0 +1,36 @@
+[
+  {
+    "alert_id": "ALRT-SE_STO-PEU-BATT-70AH-0001",
+    "priority": "high",
+    "location_id": "SE_STO",
+    "city": "Stockholm",
+    "sku": "PEU-BATT-70AH",
+    "part_name": "Baterie 70Ah AGM/EFB",
+    "category": "battery",
+    "driver_summary": "21/21 zile frig/zapada; istoric sensibil la temperature drop; forecast +12% vs baseline",
+    "confidence_proxy_percent": 91.7,
+    "sensitivity_segment": "stable_monitor",
+    "coverage_days": 22.8419177806,
+    "projected_stock_after_21d": 11.5312,
+    "recommended_order_qty": 0,
+    "dealer_message": "Stockholm: 21/21 zile frig/zapada. Pentru Baterie 70Ah AGM/EFB, forecastul pe 21 zile este 131 buc, cu +12% peste ritmul ultimelor 56 zile. Verifica stocul, MOQ si lead time.",
+    "explainability_note": "Predictia combina istoric SKU-location, sezonalitate, vreme, calendar si lag-uri. Confidence este proxy pe baza WAPE holdout pe categorie."
+  },
+  {
+    "alert_id": "ALRT-EE_TLL-PEU-BATT-70AH-0002",
+    "priority": "high",
+    "location_id": "EE_TLL",
+    "city": "Tallinn",
+    "sku": "PEU-BATT-70AH",
+    "part_name": "Baterie 70Ah AGM/EFB",
+    "category": "battery",
+    "driver_summary": "21/21 zile frig/zapada; 3/21 zile in fereastra payday; istoric sensibil la cold snap; forecast +10% vs baseline; risc stoc: medium",
+    "confidence_proxy_percent": 91.7,
+    "sensitivity_segment": "stable_monitor",
+    "coverage_days": 21.8861086988,
+    "projected_stock_after_21d": 5.7897,
+    "recommended_order_qty": 46,
+    "dealer_message": "Tallinn: 21/21 zile frig/zapada; 3/21 zile in fereastra payday. Pentru Baterie 70Ah AGM/EFB, forecastul pe 21 zile este 137 buc, cu +10% peste ritmul ultimelor 56 zile. Verifica stocul, MOQ si lead time.",
+    "explainability_note": "Predictia combina istoric SKU-location, sezonalitate, vreme, calendar si lag-uri. Confidence este proxy pe baza WAPE holdout pe categorie."
+  }
+]

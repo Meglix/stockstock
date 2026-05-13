@@ -1,0 +1,18 @@
+{
+  "evaluation_type": "risk_ranking_proxy",
+  "primary_use": "Prioritize dealer review, not exact sales or stockout guarantees.",
+  "windows_evaluated": 648,
+  "positive_event_windows": 25,
+  "alert_windows": 162,
+  "true_positive_alerts": 1,
+  "false_positive_alerts": 161,
+  "false_negative_alerts": 24,
+  "alert_precision_percent": 0.62,
+  "alert_recall_percent": 4.0,
+  "stockout_windows_actual": 0,
+  "stockout_windows_flagged": 0,
+  "stockout_units_flagged_proxy": 0.0,
+  "unnecessary_order_units_proxy": 110.25,
+  "interpretation": "Low precision/recall here means the alert heuristic is conservative/noisy on synthetic holdout windows; forecast accuracy is evaluated separately in model_metrics.json.",
+  "note": "Backtest proxy pe ferestre de 21 zile: forecastul este folosit ca ranking/risc, nu ca promisiune exacta de vanzari."
+}

@@ -1,0 +1,19 @@
+sku,part_name,category,unit_price_eur,lead_time_days,safety_stock_units,base_daily_demand
+PEU-WF-WINTER-5L,Lichid parbriz iarna -20C 5L,winter_fluids,7.5,14,80,8.0
+PEU-WIPER-650,Stergatoare fata 650mm,wipers,18.0,21,40,5.0
+PEU-BATT-70AH,Baterie 70Ah AGM/EFB,battery,145.0,10,10,3.2
+PEU-AC-REFILL,Kit incarcare clima R134a/R1234yf,ac_cooling,39.0,14,15,4.0
+PEU-CABIN-CARBON,Filtru habitaclu cu carbon,filters,19.0,10,45,5.5
+PEU-SUMMER-TIRE-205,Anvelopa vara 205/55R16,tires,72.0,21,20,3.5
+PEU-WINTER-TIRE-205,Anvelopa iarna 205/55R16,tires,78.0,21,22,3.7
+PEU-ANTIFREEZE-G12,Antigel G12 concentrat 1L,coolant,8.5,14,50,4.8
+PEU-COOLANT-PREMIX,Lichid racire premix 5L,coolant,16.0,14,30,4.2
+PEU-OIL-5W30-5L,Ulei motor 5W30 5L,maintenance,42.0,7,70,6.0
+PEU-OIL-FILTER,Filtru ulei,maintenance,9.0,7,85,7.0
+PEU-AIR-FILTER,Filtru aer motor,filters,15.0,10,65,5.6
+PEU-BRAKE-PADS-F,Placute frana fata,brakes,47.0,14,35,4.7
+PEU-HEADLIGHT-H7,Bec far H7,lighting,6.0,7,50,4.5
+PEU-RUBBER-MATS,Covorase cauciuc Peugeot,accessories,35.0,21,18,3.6
+PEU-ADBLUE-10L,AdBlue 10L,consumables,13.0,7,60,5.5
+PEU-BRAKE-FLUID-DOT4,Lichid frana DOT4 1L,brakes,9.5,10,40,4.0
+PEU-SPARK-PLUG,Bujie benzina,maintenance,8.0,14,40,4.3

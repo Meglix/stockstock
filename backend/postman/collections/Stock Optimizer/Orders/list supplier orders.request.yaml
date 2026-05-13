@@ -1,0 +1,18 @@
+$kind: http-request
+method: GET
+url: '{{base_url}}/orders/suppliers'
+order: 9000
+queryParams:
+  - key: status
+    value: ''
+    disabled: true
+  - key: supplier_id
+    value: ''
+    disabled: true
+  - key: location
+    value: ''
+    disabled: true
+  - key: limit
+    value: '100'
+  - key: offset
+    value: '0'

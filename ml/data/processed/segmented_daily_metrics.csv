@@ -1,0 +1,6 @@
+segment,n_rows,actual_units,predicted_units,MAE,WAPE_percent,bias_units
+overall_daily,9720,86023.0,85198.9481,0.516,5.8304,-0.0848
+high_volume_daily,9720,86023.0,85198.9481,0.516,5.8304,-0.0848
+rare_intermittent_daily,0,0.0,0.0,0.0,0.0,0.0
+volatile_daily,0,0.0,0.0,0.0,0.0,0.0
+weather_sensitive_category_daily,3240,38545.0,37814.8841,0.6548,5.5044,-0.2253

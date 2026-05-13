@@ -1,0 +1,21 @@
+$kind: http-request
+name: Get Catalog
+method: GET
+url: '{{base_url}}/parts/catalog'
+order: 2000
+queryParams:
+  - key: category
+    value: ''
+    disabled: true
+  - key: search
+    value: ''
+    disabled: true
+  - key: min_price
+    value: ''
+    disabled: true
+  - key: max_price
+    value: ''
+    disabled: true
+  - key: in_stock
+    value: 'true'
+    disabled: true

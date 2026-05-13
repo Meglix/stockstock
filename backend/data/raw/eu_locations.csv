@@ -1,0 +1,13 @@
+location_id,city,country,climate_zone,timezone,lat,lon,winter_base_c,summer_base_c,location_demand_multiplier
+FI_HEL,Helsinki,Finland,Nordic,Europe/Helsinki,60.17,24.94,-7,18,1.25
+SE_STO,Stockholm,Sweden,Nordic,Europe/Stockholm,59.33,18.07,-5,19,1.2
+EE_TLL,Tallinn,Estonia,Nordic,Europe/Tallinn,59.44,24.75,-6,18,1.17
+DK_CPH,Copenhagen,Denmark,North_Central,Europe/Copenhagen,55.68,12.57,1,20,1.1
+DE_BER,Berlin,Germany,Central,Europe/Berlin,52.52,13.4,0,23,1.12
+PL_WAW,Warsaw,Poland,Central,Europe/Warsaw,52.23,21.01,-2,24,1.08
+CZ_PRG,Prague,Czechia,Central,Europe/Prague,50.08,14.44,-1,24,1.05
+NL_AMS,Amsterdam,Netherlands,West,Europe/Amsterdam,52.37,4.9,3,21,1.14
+FR_PAR,Paris,France,West,Europe/Paris,48.86,2.35,4,26,1.18
+IT_MIL,Milan,Italy,South,Europe/Rome,45.46,9.19,5,30,1.12
+ES_MAD,Madrid,Spain,South,Europe/Madrid,40.42,-3.7,7,34,1.08
+RO_BUC,Bucharest,Romania,East,Europe/Bucharest,44.43,26.1,-1,29,1.04

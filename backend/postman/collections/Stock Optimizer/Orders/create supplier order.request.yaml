@@ -1,0 +1,20 @@
+$kind: http-request
+method: POST
+url: '{{base_url}}/orders/suppliers'
+order: 10000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "supplier_id": "SUP-TEST",
+      "location": "RO_BUC",
+      "items": [
+        {
+          "part_id": 1,
+          "quantity": 15
+        }
+      ]
+    }

@@ -1,0 +1,13 @@
+$kind: http-request
+method: POST
+url: '{{base_url}}/orders/clients/{{order_id}}/schedule'
+order: 7000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "time": "09:00"
+    }

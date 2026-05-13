@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get Part
+method: GET
+url: '{{base_url}}/parts/{{part_id}}'
+order: 5000

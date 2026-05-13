@@ -1,0 +1,20 @@
+$kind: http-request
+method: POST
+url: '{{base_url}}/orders/clients'
+order: 2000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "client_name": "Fleet Garage SRL",
+      "location": "RO_BUC",
+      "items": [
+        {
+          "part_id": 1,
+          "quantity": 2
+        }
+      ]
+    }

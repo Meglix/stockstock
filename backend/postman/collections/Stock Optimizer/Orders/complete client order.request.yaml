@@ -1,0 +1,4 @@
+$kind: http-request
+method: POST
+url: '{{base_url}}/orders/clients/{{order_id}}/complete'
+order: 8000

@@ -1,0 +1,38 @@
+{
+  "model_name": "KMeans_SKU_location_segmentation",
+  "trained_at_utc": "2026-05-12T08:45:32Z",
+  "n_clusters": 6,
+  "features": [
+    "avg_daily_demand",
+    "std_daily_demand",
+    "cv_demand",
+    "zero_sales_share",
+    "stockout_rate",
+    "winter_ratio",
+    "summer_ratio",
+    "payday_uplift",
+    "weather_spike_uplift",
+    "cold_snap_uplift",
+    "heatwave_uplift",
+    "promotion_uplift",
+    "travel_event_uplift",
+    "mean_stock_end"
+  ],
+  "cluster_name_map": {
+    "5": "slow_moving_intermittent",
+    "4": "winter_weather_sensitive",
+    "3": "summer_heat_sensitive",
+    "0": "salary_event_sensitive",
+    "1": "promotion_travel_sensitive",
+    "2": "fast_moving_stable"
+  },
+  "n_segmented_pairs": 216,
+  "segment_counts": {
+    "fast_moving_stable": 119,
+    "salary_event_sensitive": 60,
+    "summer_heat_sensitive": 12,
+    "promotion_travel_sensitive": 12,
+    "winter_weather_sensitive": 11,
+    "slow_moving_intermittent": 2
+  }
+}

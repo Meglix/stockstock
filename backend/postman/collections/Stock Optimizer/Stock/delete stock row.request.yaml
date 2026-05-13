@@ -1,0 +1,5 @@
+$kind: http-request
+name: Delete Stock Row
+method: DELETE
+url: '{{base_url}}/stock/{{part_id}}/{{location}}'
+order: 5000

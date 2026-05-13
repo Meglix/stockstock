@@ -1,0 +1,11 @@
+services:
+  stock-optimizer-ml:
+    build: .
+    container_name: stock-optimizer-ml-eu
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models

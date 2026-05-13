@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get Stock for Part
+method: GET
+url: '{{base_url}}/stock/{{part_id}}'
+order: 2000

@@ -1,0 +1,5 @@
+model_name,MAE,RMSE,MAPE_percent,WAPE_percent,bias_units,R2
+ExtraTrees global raw,0.516,0.8222,7.1335,5.8304,-0.0848,0.9872
+ExtraTrees global + local guard,0.516,0.8222,7.1335,5.8304,-0.0848,0.9872
+Final guarded forecast,0.516,0.8222,7.1335,5.8304,-0.0848,0.9872
+Baseline rolling_mean_28,1.0389,1.636,12.9452,11.7392,0.0911,0.9494

@@ -1,0 +1,19 @@
+$kind: http-request
+name: Update Part
+method: PATCH
+url: '{{base_url}}/parts/{{part_id}}'
+order: 7000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "part_name": "Brake Pad Premium Plus",
+      "category": "Brakes",
+      "unit_price": 84.0,
+      "lead_time_days": 4,
+      "min_order_qty": 12,
+      "criticality": 5
+    }

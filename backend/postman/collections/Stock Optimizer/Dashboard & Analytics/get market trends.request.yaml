@@ -1,0 +1,7 @@
+$kind: http-request
+method: GET
+url: '{{base_url}}/dashboard/market-trends'
+order: 4000
+queryParams:
+  - key: limit
+    value: '5'

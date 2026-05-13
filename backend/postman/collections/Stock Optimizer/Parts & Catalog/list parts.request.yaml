@@ -1,0 +1,18 @@
+$kind: http-request
+name: List Parts
+method: GET
+url: '{{base_url}}/parts'
+order: 1000
+queryParams:
+  - key: category
+    value: ''
+    disabled: true
+  - key: search
+    value: ''
+    disabled: true
+  - key: limit
+    value: '20'
+    disabled: true
+  - key: offset
+    value: '0'
+    disabled: true

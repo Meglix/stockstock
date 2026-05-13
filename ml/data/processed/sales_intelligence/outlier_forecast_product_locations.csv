@@ -1,0 +1,5 @@
+sku,location_id,part_name,city,volatility_score,seasonality_score,weather_sensitivity_score
+PEU-AC-REFILL,RO_BUC,Kit incarcare clima R134a/R1234yf,Bucharest,1.0112,2.9916,3.9404
+PEU-WINTER-TIRE-205,FI_HEL,Anvelopa iarna 205/55R16,Helsinki,0.987,2.8914,1.3555
+PEU-SUMMER-TIRE-205,EE_TLL,Anvelopa vara 205/55R16,Tallinn,0.8627,2.6972,0.0
+PEU-WF-WINTER-5L,FI_HEL,Lichid parbriz iarna -20C 5L,Helsinki,0.7408,1.9504,2.2696

@@ -1,0 +1,10 @@
+name: Stock Optimizer
+values:
+  - key: base_url
+    value: 'http://localhost:8000'
+    enabled: true
+    type: default
+  - key: access_token
+    value: ''
+    enabled: true
+    type: default

@@ -1,0 +1,7 @@
+$kind: http-request
+method: GET
+url: '{{base_url}}/dashboard/priority-stock'
+order: 6000
+queryParams:
+  - key: limit
+    value: '5'

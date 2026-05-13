@@ -1,0 +1,5 @@
+$kind: http-request
+name: Delete Part
+method: DELETE
+url: '{{base_url}}/parts/{{part_id}}'
+order: 8000

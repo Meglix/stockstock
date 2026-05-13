@@ -1,0 +1,41 @@
+$kind: collection
+name: Stock Optimizer
+description: |-
+  Complete API collection for the Stock Optimizer project.
+  Covers authentication, health checks, parts catalog management,
+  stock tracking, order lifecycle,
+  and dashboard analytics.
+
+  ## Getting Started
+  1. Run **Auth / Login** — the `access_token` is saved automatically to your environment.
+  2. All other requests inherit Bearer auth from the collection level.
+  3. Set `base_url` to your running backend (e.g. `http://localhost:8000`).
+
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{access_token}}'
+
+variables:
+  - key: base_url
+    value: 'http://localhost:8000'
+    description: Base URL for the Stock Optimizer API
+  - key: access_token
+    value: ''
+    description: JWT access token — populated automatically by the Login request
+  - key: part_id
+    value: ''
+    description: ID of the part to operate on
+  - key: supplier_id
+    value: ''
+    description: ID of the supplier to operate on
+  - key: order_id
+    value: ''
+    description: ID of the order to operate on
+  - key: location
+    value: ''
+    description: Warehouse / location identifier
+  - key: alert_id
+    value: ''
+    description: ID of the stock alert to acknowledge

@@ -1,0 +1,15 @@
+$kind: http-request
+name: Get Stock
+method: GET
+url: '{{base_url}}/stock'
+order: 1000
+queryParams:
+  - key: location
+    value: ''
+    disabled: true
+  - key: category
+    value: ''
+    disabled: true
+  - key: low_stock_only
+    value: 'false'
+    disabled: true

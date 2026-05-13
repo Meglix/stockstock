@@ -1,0 +1,14 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: stock_optimizer_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount the database folder so the .db file persists between restarts
+      - ./backend/database:/app/database
+    env_file:
+      - .env
+    restart: unless-stopped

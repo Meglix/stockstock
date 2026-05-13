@@ -1,0 +1,11 @@
+integration_name,status,path,exists,row_count,latest_date,purpose,production_next_step
+POS sales,available,data\raw\sales_history.csv,True,157896,2025-12-31,Core demand history and sell-rate.,Keep freshness checks active.
+Inventory snapshot,available,data\raw\inventory_snapshot.csv,True,216,,"Current stock, safety stock, MOQ, lead time.",Keep freshness checks active.
+Supplier master,available,data\raw\suppliers.csv,True,8,,Supplier reliability and delay risk.,Keep freshness checks active.
+Weather API,simulated,data\raw\weather_daily.csv,True,8772,2025-12-31,Forecast weather drivers; replace with live API in production.,Map real client source and validate schema.
+Calendar events,available,data\raw\calendar_daily.csv,True,731,2025-12-31,"Holidays, payday windows, campaigns.",Keep freshness checks active.
+Service appointments,not_connected,data\raw\service_appointments.csv,False,0,,Forward-looking workshop demand signal.,Map real client source and validate schema.
+Vehicle parc / VIO,not_connected,data\raw\vehicle_parc.csv,False,0,,Regional vehicle population and engine mix.,Map real client source and validate schema.
+Promotions,available,data\raw\calendar_events.csv,True,9328,2026-01-30,Campaign and promotion uplift.,Keep freshness checks active.
+Fuel and mobility index,available,data\raw\sales_history.csv,True,157896,2025-12-31,Mobility context already embedded in generated sales data.,Keep freshness checks active.
+Forecast model outputs,available,data\processed\forecast_30d.csv,True,6480,2026-01-30,Demand forecast consumed by alerts and reorder logic.,Keep freshness checks active.

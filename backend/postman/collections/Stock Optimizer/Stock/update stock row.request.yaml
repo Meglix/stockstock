@@ -1,0 +1,17 @@
+$kind: http-request
+name: Update Stock Row
+method: PATCH
+url: '{{base_url}}/stock/{{part_id}}/{{location}}'
+order: 4000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "current_stock": 95,
+      "reorder_point": 35,
+      "safety_stock": 18,
+      "optimal_stock": 140
+    }

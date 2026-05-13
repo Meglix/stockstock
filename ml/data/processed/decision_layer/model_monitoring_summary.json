@@ -1,0 +1,30 @@
+{
+  "generated_at_utc": "2026-05-12T08:46:02Z",
+  "holdout_rows": 1000,
+  "overall_MAE": 0.5135,
+  "overall_WAPE_percent": 6.1986,
+  "overall_bias_units": -0.0685,
+  "active_dealer_alerts": 2,
+  "critical_dealer_alerts": 0,
+  "monitoring_recommendation": "Retrain if WAPE grows by 10pp, bias exceeds +/-0.5 units, or data drift persists for 2 refresh cycles.",
+  "overall_21d_WAPE_percent": 1.8109,
+  "overall_21d_MAE": 2.4041,
+  "business_alert_backtest_21d": {
+    "evaluation_type": "risk_ranking_proxy",
+    "primary_use": "Prioritize dealer review, not exact sales or stockout guarantees.",
+    "windows_evaluated": 648,
+    "positive_event_windows": 25,
+    "alert_windows": 162,
+    "true_positive_alerts": 1,
+    "false_positive_alerts": 161,
+    "false_negative_alerts": 24,
+    "alert_precision_percent": 0.62,
+    "alert_recall_percent": 4.0,
+    "stockout_windows_actual": 0,
+    "stockout_windows_flagged": 0,
+    "stockout_units_flagged_proxy": 0.0,
+    "unnecessary_order_units_proxy": 110.25,
+    "interpretation": "Low precision/recall here means the alert heuristic is conservative/noisy on synthetic holdout windows; forecast accuracy is evaluated separately in model_metrics.json.",
+    "note": "Backtest proxy pe ferestre de 21 zile: forecastul este folosit ca ranking/risc, nu ca promisiune exacta de vanzari."
+  }
+}

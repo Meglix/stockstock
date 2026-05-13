@@ -1,0 +1,7 @@
+$kind: http-request
+method: GET
+url: '{{base_url}}/dashboard/supplier-locations'
+order: 5000
+queryParams:
+  - key: limit
+    value: '8'

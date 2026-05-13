@@ -1,0 +1,28 @@
+$kind: http-request
+name: Login
+method: POST
+url: '{{base_url}}/auth/login'
+order: 2000
+auth:
+  type: noauth
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "jane@example.com",
+      "password": "Secret123!"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      const json = pm.response.json();
+      if (json && json.access_token) {
+          pm.environment.set("access_token", json.access_token);
+          console.log("✅ access_token saved to environment");
+      } else {
+          console.warn("⚠️  No access_token found in response");
+      }

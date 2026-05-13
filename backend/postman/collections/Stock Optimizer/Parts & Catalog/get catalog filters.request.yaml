@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get Catalog Filters
+method: GET
+url: '{{base_url}}/parts/catalog/filters'
+order: 3000

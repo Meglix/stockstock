@@ -1,0 +1,13 @@
+location_id,city,country_code,latitude,longitude,climate_zone,total_alerts,critical_alerts,high_alerts,critical_stock_risks,high_stock_risks,recommended_order_units,risk_score,risk_level
+EE_TLL,Tallinn,Estonia,59.44,24.75,Nordic,1.0,0.0,1.0,2,0,1189,18.08,high
+SE_STO,Stockholm,Sweden,59.33,18.07,Nordic,1.0,0.0,1.0,2,0,1154,18.05,high
+FI_HEL,Helsinki,Finland,60.17,24.94,Nordic,0.0,0.0,0.0,2,1,1305,17.17,high
+DE_BER,Berlin,Germany,52.52,13.4,Central,0.0,0.0,0.0,2,0,512,14.24,high
+PL_WAW,Warsaw,Poland,52.23,21.01,Central,0.0,0.0,0.0,2,0,512,14.24,high
+CZ_PRG,Prague,Czechia,50.08,14.44,Central,0.0,0.0,0.0,2,0,480,14.18,high
+RO_BUC,Bucharest,Romania,44.43,26.1,East,0.0,0.0,0.0,2,0,476,14.17,high
+DK_CPH,Copenhagen,Denmark,55.68,12.57,North_Central,0.0,0.0,0.0,2,0,400,13.99,high
+FR_PAR,Paris,France,48.86,2.35,West,0.0,0.0,0.0,1,1,243,11.5,watch
+NL_AMS,Amsterdam,Netherlands,52.37,4.9,West,0.0,0.0,0.0,0,1,226,7.42,watch
+IT_MIL,Milan,Italy,45.46,9.19,South,0.0,0.0,0.0,0,1,209,7.35,watch
+ES_MAD,Madrid,Spain,40.42,-3.7,South,0.0,0.0,0.0,0,1,201,7.31,watch

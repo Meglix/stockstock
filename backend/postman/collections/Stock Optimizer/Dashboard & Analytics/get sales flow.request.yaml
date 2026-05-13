@@ -1,0 +1,12 @@
+$kind: http-request
+method: GET
+url: '{{base_url}}/dashboard/sales-flow'
+order: 3000
+queryParams:
+  - key: months
+    value: '6'
+  - key: categories
+    value: '6'
+  - key: category
+    value: ''
+    disabled: true

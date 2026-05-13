@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get Catalog Item
+method: GET
+url: '{{base_url}}/parts/catalog/{{part_id}}'
+order: 4000

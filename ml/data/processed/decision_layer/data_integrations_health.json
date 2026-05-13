@@ -1,0 +1,109 @@
+{
+  "generated_at_utc": "2026-05-12T08:46:03Z",
+  "available_count": 7,
+  "simulated_count": 1,
+  "not_connected_count": 2,
+  "missing_count": 0,
+  "integrations": [
+    {
+      "integration_name": "POS sales",
+      "status": "available",
+      "path": "data\\raw\\sales_history.csv",
+      "exists": true,
+      "row_count": 157896,
+      "latest_date": "2025-12-31",
+      "purpose": "Core demand history and sell-rate.",
+      "production_next_step": "Keep freshness checks active."
+    },
+    {
+      "integration_name": "Inventory snapshot",
+      "status": "available",
+      "path": "data\\raw\\inventory_snapshot.csv",
+      "exists": true,
+      "row_count": 216,
+      "latest_date": "",
+      "purpose": "Current stock, safety stock, MOQ, lead time.",
+      "production_next_step": "Keep freshness checks active."
+    },
+    {
+      "integration_name": "Supplier master",
+      "status": "available",
+      "path": "data\\raw\\suppliers.csv",
+      "exists": true,
+      "row_count": 8,
+      "latest_date": "",
+      "purpose": "Supplier reliability and delay risk.",
+      "production_next_step": "Keep freshness checks active."
+    },
+    {
+      "integration_name": "Weather API",
+      "status": "simulated",
+      "path": "data\\raw\\weather_daily.csv",
+      "exists": true,
+      "row_count": 8772,
+      "latest_date": "2025-12-31",
+      "purpose": "Forecast weather drivers; replace with live API in production.",
+      "production_next_step": "Map real client source and validate schema."
+    },
+    {
+      "integration_name": "Calendar events",
+      "status": "available",
+      "path": "data\\raw\\calendar_daily.csv",
+      "exists": true,
+      "row_count": 731,
+      "latest_date": "2025-12-31",
+      "purpose": "Holidays, payday windows, campaigns.",
+      "production_next_step": "Keep freshness checks active."
+    },
+    {
+      "integration_name": "Service appointments",
+      "status": "not_connected",
+      "path": "data\\raw\\service_appointments.csv",
+      "exists": false,
+      "row_count": 0,
+      "latest_date": "",
+      "purpose": "Forward-looking workshop demand signal.",
+      "production_next_step": "Map real client source and validate schema."
+    },
+    {
+      "integration_name": "Vehicle parc / VIO",
+      "status": "not_connected",
+      "path": "data\\raw\\vehicle_parc.csv",
+      "exists": false,
+      "row_count": 0,
+      "latest_date": "",
+      "purpose": "Regional vehicle population and engine mix.",
+      "production_next_step": "Map real client source and validate schema."
+    },
+    {
+      "integration_name": "Promotions",
+      "status": "available",
+      "path": "data\\raw\\calendar_events.csv",
+      "exists": true,
+      "row_count": 9328,
+      "latest_date": "2026-01-30",
+      "purpose": "Campaign and promotion uplift.",
+      "production_next_step": "Keep freshness checks active."
+    },
+    {
+      "integration_name": "Fuel and mobility index",
+      "status": "available",
+      "path": "data\\raw\\sales_history.csv",
+      "exists": true,
+      "row_count": 157896,
+      "latest_date": "2025-12-31",
+      "purpose": "Mobility context already embedded in generated sales data.",
+      "production_next_step": "Keep freshness checks active."
+    },
+    {
+      "integration_name": "Forecast model outputs",
+      "status": "available",
+      "path": "data\\processed\\forecast_30d.csv",
+      "exists": true,
+      "row_count": 6480,
+      "latest_date": "2026-01-30",
+      "purpose": "Demand forecast consumed by alerts and reorder logic.",
+      "production_next_step": "Keep freshness checks active."
+    }
+  ]
+}

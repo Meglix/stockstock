@@ -1,0 +1,24 @@
+$kind: http-request
+name: Create Part
+method: POST
+url: '{{base_url}}/parts'
+order: 6000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "sku": "BRK-9001",
+      "part_name": "Brake Pad Premium",
+      "category": "Brakes",
+      "seasonality_profile": "stable",
+      "base_demand": 12,
+      "supplier_id": "SUP-TEST",
+      "unit_price": 79.5,
+      "salary_sensitivity": 0.2,
+      "lead_time_days": 5,
+      "min_order_qty": 10,
+      "criticality": 4
+    }

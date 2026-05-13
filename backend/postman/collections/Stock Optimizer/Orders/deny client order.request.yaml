@@ -1,0 +1,4 @@
+$kind: http-request
+method: POST
+url: '{{base_url}}/orders/clients/{{order_id}}/deny'
+order: 6000

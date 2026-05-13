@@ -1,0 +1,7 @@
+$kind: http-request
+method: GET
+url: '{{base_url}}/notifications'
+order: 7000
+queryParams:
+  - key: generate
+    value: 'true'

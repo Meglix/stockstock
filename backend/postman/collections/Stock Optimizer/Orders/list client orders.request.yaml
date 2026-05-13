@@ -1,0 +1,15 @@
+$kind: http-request
+method: GET
+url: '{{base_url}}/orders/clients'
+order: 1000
+queryParams:
+  - key: status
+    value: ''
+    disabled: true
+  - key: location
+    value: ''
+    disabled: true
+  - key: limit
+    value: '100'
+  - key: offset
+    value: '0'

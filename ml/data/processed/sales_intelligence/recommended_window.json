@@ -1,0 +1,6 @@
+{
+  "recommended_window_days": 7,
+  "selection_metric": "lowest WAPE on last 365 historical days",
+  "WAPE_percent": 12.3309,
+  "MAE": 0.8754
+}

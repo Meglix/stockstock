@@ -1,0 +1,217 @@
+sku,location_id,part_name,category,city,country_code,expected_21d_units,mild_weather_21d_units,severe_weather_21d_units,promo_payday_21d_units,pessimistic_21d_units,optimistic_21d_units,max_trigger_effect,weather_spike_days,payday_window_days,scenario_spread_units
+PEU-WF-WINTER-5L,FI_HEL,Lichid parbriz iarna -20C 5L,winter_fluids,Helsinki,Finland,923.0,615.49,1568.61,923.0,553.94,1568.61,1.9985,0,0,1014.67
+PEU-WF-WINTER-5L,EE_TLL,Lichid parbriz iarna -20C 5L,winter_fluids,Tallinn,Estonia,890.81,657.24,1370.88,893.16,591.51,1393.91,1.9317,0,3,802.4
+PEU-WF-WINTER-5L,SE_STO,Lichid parbriz iarna -20C 5L,winter_fluids,Stockholm,Sweden,860.69,744.39,1094.07,860.69,669.95,1165.48,1.7336,0,0,495.53
+PEU-WINTER-TIRE-205,FI_HEL,Anvelopa iarna 205/55R16,tires,Helsinki,Finland,294.43,239.15,389.73,294.43,215.23,389.73,0.9247,0,0,174.5
+PEU-WF-WINTER-5L,PL_WAW,Lichid parbriz iarna -20C 5L,winter_fluids,Warsaw,Poland,585.83,584.77,587.34,587.34,526.29,673.71,0.0509,0,3,147.42
+PEU-WF-WINTER-5L,DE_BER,Lichid parbriz iarna -20C 5L,winter_fluids,Berlin,Germany,585.43,585.43,585.43,585.43,526.89,673.25,0.0,0,0,146.36
+PEU-WF-WINTER-5L,RO_BUC,Lichid parbriz iarna -20C 5L,winter_fluids,Bucharest,Romania,580.42,579.04,582.39,582.39,521.13,667.48,0.0659,0,3,146.35
+PEU-WF-WINTER-5L,CZ_PRG,Lichid parbriz iarna -20C 5L,winter_fluids,Prague,Czechia,573.75,572.62,575.36,575.36,515.36,659.81,0.055,0,3,144.45
+PEU-WF-WINTER-5L,DK_CPH,Lichid parbriz iarna -20C 5L,winter_fluids,Copenhagen,Denmark,528.83,528.83,528.83,528.83,475.95,608.15,0.0,0,0,132.2
+PEU-WINTER-TIRE-205,EE_TLL,Anvelopa iarna 205/55R16,tires,Tallinn,Estonia,261.63,228.48,316.53,262.33,205.63,323.72,0.7902,0,3,118.09
+PEU-WF-WINTER-5L,FR_PAR,Lichid parbriz iarna -20C 5L,winter_fluids,Paris,France,429.62,429.62,429.62,429.62,386.66,494.06,0.0,0,0,107.4
+PEU-WF-WINTER-5L,NL_AMS,Lichid parbriz iarna -20C 5L,winter_fluids,Amsterdam,Netherlands,426.3,426.3,426.3,426.3,383.67,490.25,0.0,0,0,106.58
+PEU-WF-WINTER-5L,IT_MIL,Lichid parbriz iarna -20C 5L,winter_fluids,Milan,Italy,415.43,415.43,415.43,415.43,373.89,477.75,0.0,0,0,103.86
+PEU-WF-WINTER-5L,ES_MAD,Lichid parbriz iarna -20C 5L,winter_fluids,Madrid,Spain,404.74,404.74,404.74,404.74,364.26,465.45,0.0,0,0,101.19
+PEU-WINTER-TIRE-205,SE_STO,Anvelopa iarna 205/55R16,tires,Stockholm,Sweden,280.74,263.92,307.98,280.74,237.53,331.47,0.627,0,0,93.94
+PEU-ANTIFREEZE-G12,FI_HEL,Antigel G12 concentrat 1L,coolant,Helsinki,Finland,212.37,196.62,236.19,212.37,176.95,244.22,0.3205,0,0,67.27
+PEU-ANTIFREEZE-G12,EE_TLL,Antigel G12 concentrat 1L,coolant,Tallinn,Estonia,209.73,197.4,228.27,210.64,177.66,241.19,0.3835,0,3,63.53
+PEU-BATT-70AH,FI_HEL,Baterie 70Ah AGM/EFB,battery,Helsinki,Finland,140.34,121.33,171.12,140.34,109.2,171.12,0.6267,0,0,61.92
+PEU-COOLANT-PREMIX,FI_HEL,Lichid racire premix 5L,coolant,Helsinki,Finland,192.33,177.99,214.03,192.33,160.19,221.18,0.3224,0,0,60.99
+PEU-WIPER-650,FI_HEL,Stergatoare fata 650mm,wipers,Helsinki,Finland,201.54,190.81,217.4,201.54,171.73,231.77,0.2249,0,0,60.04
+PEU-COOLANT-PREMIX,EE_TLL,Lichid racire premix 5L,coolant,Tallinn,Estonia,191.9,180.42,209.19,192.8,162.38,220.69,0.39390000000000003,0,3,58.31
+PEU-ANTIFREEZE-G12,SE_STO,Antigel G12 concentrat 1L,coolant,Stockholm,Sweden,209.92,204.31,218.29,209.92,183.88,241.41,0.2626,0,0,57.53
+PEU-WIPER-650,EE_TLL,Stergatoare fata 650mm,wipers,Tallinn,Estonia,201.04,194.28,210.87,201.9,174.85,231.19,0.24320000000000003,0,3,56.34
+PEU-BATT-70AH,EE_TLL,Baterie 70Ah AGM/EFB,battery,Tallinn,Estonia,137.21,122.37,161.1,137.84,110.13,164.76,0.6929,0,3,54.63
+PEU-HEADLIGHT-H7,FI_HEL,Bec far H7,lighting,Helsinki,Finland,173.91,162.92,190.33,173.91,146.63,199.99,0.2698,0,0,53.36
+PEU-WIPER-650,SE_STO,Stergatoare fata 650mm,wipers,Stockholm,Sweden,197.85,195.79,200.81,197.85,176.21,227.53,0.1,0,0,51.32
+PEU-COOLANT-PREMIX,SE_STO,Lichid racire premix 5L,coolant,Stockholm,Sweden,185.29,180.37,192.63,185.29,162.33,213.09,0.2609,0,0,50.76
+PEU-HEADLIGHT-H7,EE_TLL,Bec far H7,lighting,Tallinn,Estonia,167.45,158.77,180.39,168.27,142.89,192.57,0.3518,0,3,49.68
+PEU-WINTER-TIRE-205,PL_WAW,Anvelopa iarna 205/55R16,tires,Warsaw,Poland,193.29,192.97,193.74,193.74,173.67,222.28,0.0481,0,3,48.61
+PEU-OIL-FILTER,EE_TLL,Filtru ulei,maintenance,Tallinn,Estonia,184.04,181.53,187.87,187.87,163.38,211.65,0.357,0,3,48.27
+PEU-OIL-FILTER,FI_HEL,Filtru ulei,maintenance,Helsinki,Finland,189.54,189.54,189.54,189.54,170.58,217.97,0.0,0,0,47.39
+PEU-OIL-FILTER,PL_WAW,Filtru ulei,maintenance,Warsaw,Poland,179.6,177.16,183.32,183.32,159.45,206.54,0.3517,0,3,47.09
+PEU-WIPER-650,PL_WAW,Stergatoare fata 650mm,wipers,Warsaw,Poland,184.8,184.24,185.61,185.61,165.82,212.52,0.0872,0,3,46.7
+PEU-WINTER-TIRE-205,CZ_PRG,Anvelopa iarna 205/55R16,tires,Prague,Czechia,184.96,184.47,185.66,185.66,166.02,212.7,0.0769,0,3,46.68
+PEU-WIPER-650,CZ_PRG,Stergatoare fata 650mm,wipers,Prague,Czechia,182.66,182.08,183.48,183.48,163.87,210.05,0.0911,0,3,46.18
+PEU-ANTIFREEZE-G12,FR_PAR,Antigel G12 concentrat 1L,coolant,Paris,France,184.3,184.3,184.3,184.3,165.87,211.95,0.0,0,0,46.08
+PEU-OIL-FILTER,SE_STO,Filtru ulei,maintenance,Stockholm,Sweden,184.25,184.25,184.25,184.25,165.82,211.89,0.0,0,0,46.07
+PEU-WIPER-650,RO_BUC,Stergatoare fata 650mm,wipers,Bucharest,Romania,182.09,181.58,182.82,182.82,163.42,209.4,0.0802,0,3,45.98
+PEU-WIPER-650,DE_BER,Stergatoare fata 650mm,wipers,Berlin,Germany,183.79,183.79,183.79,183.79,165.41,211.36,0.0,0,0,45.95
+PEU-WINTER-TIRE-205,DE_BER,Anvelopa iarna 205/55R16,tires,Berlin,Germany,183.77,183.77,183.77,183.77,165.39,211.33,0.0,0,0,45.94
+PEU-OIL-FILTER,FR_PAR,Filtru ulei,maintenance,Paris,France,182.23,182.23,182.23,182.23,164.0,209.56,0.0,0,0,45.56
+PEU-HEADLIGHT-H7,SE_STO,Bec far H7,lighting,Stockholm,Sweden,166.82,162.7,172.93,166.82,146.43,191.85,0.2388,0,0,45.42
+PEU-OIL-FILTER,CZ_PRG,Filtru ulei,maintenance,Prague,Czechia,172.44,170.07,176.04,176.04,153.06,198.3,0.3485,0,3,45.24
+PEU-WINTER-TIRE-205,RO_BUC,Anvelopa iarna 205/55R16,tires,Bucharest,Romania,179.27,178.83,179.9,179.9,160.95,206.16,0.0712,0,3,45.21
+PEU-WINTER-TIRE-205,DK_CPH,Anvelopa iarna 205/55R16,tires,Copenhagen,Denmark,179.86,179.86,179.86,179.86,161.87,206.84,0.0,0,0,44.97
+PEU-OIL-FILTER,IT_MIL,Filtru ulei,maintenance,Milan,Italy,178.92,178.92,178.92,178.92,161.02,205.75,0.0,0,0,44.73
+PEU-ANTIFREEZE-G12,IT_MIL,Antigel G12 concentrat 1L,coolant,Milan,Italy,177.36,177.36,177.36,177.36,159.62,203.96,0.0,0,0,44.34
+PEU-ANTIFREEZE-G12,NL_AMS,Antigel G12 concentrat 1L,coolant,Amsterdam,Netherlands,177.19,177.19,177.19,177.19,159.47,203.76,0.0,0,0,44.29
+PEU-OIL-FILTER,NL_AMS,Filtru ulei,maintenance,Amsterdam,Netherlands,175.57,175.57,175.57,175.57,158.01,201.91,0.0,0,0,43.9
+PEU-ANTIFREEZE-G12,DE_BER,Antigel G12 concentrat 1L,coolant,Berlin,Germany,174.99,174.99,174.99,174.99,157.49,201.23,0.0,0,0,43.74
+PEU-WINTER-TIRE-205,FR_PAR,Anvelopa iarna 205/55R16,tires,Paris,France,174.73,174.73,174.73,174.73,157.26,200.94,0.0,0,0,43.68
+PEU-OIL-FILTER,RO_BUC,Filtru ulei,maintenance,Bucharest,Romania,166.4,164.11,169.9,169.9,147.7,191.36,0.356,0,3,43.66
+PEU-ANTIFREEZE-G12,DK_CPH,Antigel G12 concentrat 1L,coolant,Copenhagen,Denmark,174.04,174.04,174.04,174.04,156.64,200.15,0.0,0,0,43.51
+PEU-ANTIFREEZE-G12,PL_WAW,Antigel G12 concentrat 1L,coolant,Warsaw,Poland,171.89,171.47,172.48,172.48,154.32,197.67,0.0676,0,3,43.35
+PEU-OIL-FILTER,DE_BER,Filtru ulei,maintenance,Berlin,Germany,173.25,173.25,173.25,173.25,155.93,199.24,0.0,0,0,43.31
+PEU-WIPER-650,FR_PAR,Stergatoare fata 650mm,wipers,Paris,France,172.95,172.95,172.95,172.95,155.66,198.9,0.0,0,0,43.24
+PEU-OIL-FILTER,DK_CPH,Filtru ulei,maintenance,Copenhagen,Denmark,171.82,171.82,171.82,171.82,154.64,197.59,0.0,0,0,42.95
+PEU-ANTIFREEZE-G12,CZ_PRG,Antigel G12 concentrat 1L,coolant,Prague,Czechia,169.61,169.12,170.32,170.32,152.2,195.05,0.0803,0,3,42.85
+PEU-BATT-70AH,SE_STO,Baterie 70Ah AGM/EFB,battery,Stockholm,Sweden,131.47,124.03,143.4,131.47,111.63,154.39,0.5859,0,0,42.76
+PEU-OIL-5W30-5L,EE_TLL,Ulei motor 5W30 5L,maintenance,Tallinn,Estonia,162.62,160.4,166.01,166.01,144.36,187.01,0.3615,0,3,42.65
+PEU-WIPER-650,NL_AMS,Stergatoare fata 650mm,wipers,Amsterdam,Netherlands,169.27,169.27,169.27,169.27,152.34,194.66,0.0,0,0,42.32
+PEU-WINTER-TIRE-205,NL_AMS,Anvelopa iarna 205/55R16,tires,Amsterdam,Netherlands,169.07,169.07,169.07,169.07,152.16,194.43,0.0,0,0,42.27
+PEU-ANTIFREEZE-G12,ES_MAD,Antigel G12 concentrat 1L,coolant,Madrid,Spain,168.9,168.9,168.9,168.9,152.01,194.24,0.0,0,0,42.23
+PEU-OIL-FILTER,ES_MAD,Filtru ulei,maintenance,Madrid,Spain,168.84,168.84,168.84,168.84,151.96,194.17,0.0,0,0,42.21
+PEU-ANTIFREEZE-G12,RO_BUC,Antigel G12 concentrat 1L,coolant,Bucharest,Romania,166.61,166.07,167.39,167.39,149.47,191.61,0.0906,0,3,42.14
+PEU-OIL-5W30-5L,FI_HEL,Ulei motor 5W30 5L,maintenance,Helsinki,Finland,167.98,167.98,167.98,167.98,151.18,193.17,0.0,0,0,41.99
+PEU-WIPER-650,DK_CPH,Stergatoare fata 650mm,wipers,Copenhagen,Denmark,167.29,167.29,167.29,167.29,150.56,192.39,0.0,0,0,41.83
+PEU-HEADLIGHT-H7,FR_PAR,Bec far H7,lighting,Paris,France,165.58,165.58,165.58,165.58,149.02,190.42,0.0,0,0,41.4
+PEU-COOLANT-PREMIX,FR_PAR,Lichid racire premix 5L,coolant,Paris,France,164.69,164.69,164.69,164.69,148.22,189.39,0.0,0,0,41.17
+PEU-HEADLIGHT-H7,IT_MIL,Bec far H7,lighting,Milan,Italy,163.51,163.51,163.51,163.51,147.15,188.03,0.0,0,0,40.88
+PEU-WINTER-TIRE-205,IT_MIL,Anvelopa iarna 205/55R16,tires,Milan,Italy,163.45,163.45,163.45,163.45,147.11,187.97,0.0,0,0,40.86
+PEU-HEADLIGHT-H7,NL_AMS,Bec far H7,lighting,Amsterdam,Netherlands,163.11,163.11,163.11,163.11,146.8,187.57,0.0,0,0,40.77
+PEU-WIPER-650,IT_MIL,Stergatoare fata 650mm,wipers,Milan,Italy,163.0,163.0,163.0,163.0,146.7,187.45,0.0,0,0,40.75
+PEU-COOLANT-PREMIX,NL_AMS,Lichid racire premix 5L,coolant,Amsterdam,Netherlands,162.44,162.44,162.44,162.44,146.2,186.81,0.0,0,0,40.61
+PEU-WINTER-TIRE-205,ES_MAD,Anvelopa iarna 205/55R16,tires,Madrid,Spain,161.67,161.67,161.67,161.67,145.5,185.92,0.0,0,0,40.42
+PEU-OIL-5W30-5L,PL_WAW,Ulei motor 5W30 5L,maintenance,Warsaw,Poland,153.45,151.35,156.66,156.66,136.21,176.47,0.3586,0,3,40.26
+PEU-OIL-5W30-5L,RO_BUC,Ulei motor 5W30 5L,maintenance,Bucharest,Romania,153.18,151.02,156.48,156.48,135.92,176.16,0.3596,0,3,40.24
+PEU-WIPER-650,ES_MAD,Stergatoare fata 650mm,wipers,Madrid,Spain,160.88,160.88,160.88,160.88,144.79,185.01,0.0,0,0,40.22
+PEU-OIL-5W30-5L,FR_PAR,Ulei motor 5W30 5L,maintenance,Paris,France,159.98,159.98,159.98,159.98,143.98,183.98,0.0,0,0,40.0
+PEU-COOLANT-PREMIX,DE_BER,Lichid racire premix 5L,coolant,Berlin,Germany,159.64,159.64,159.64,159.64,143.68,183.59,0.0,0,0,39.91
+PEU-OIL-5W30-5L,SE_STO,Ulei motor 5W30 5L,maintenance,Stockholm,Sweden,159.19,159.19,159.19,159.19,143.27,183.07,0.0,0,0,39.8
+PEU-HEADLIGHT-H7,DE_BER,Bec far H7,lighting,Berlin,Germany,158.75,158.75,158.75,158.75,142.88,182.57,0.0,0,0,39.69
+PEU-HEADLIGHT-H7,DK_CPH,Bec far H7,lighting,Copenhagen,Denmark,158.03,158.03,158.03,158.03,142.23,181.74,0.0,0,0,39.51
+PEU-OIL-5W30-5L,CZ_PRG,Ulei motor 5W30 5L,maintenance,Prague,Czechia,150.44,148.32,153.66,153.66,133.49,173.0,0.3573,0,3,39.51
+PEU-HEADLIGHT-H7,PL_WAW,Bec far H7,lighting,Warsaw,Poland,156.32,155.87,156.95,156.95,140.29,179.76,0.0796,0,3,39.47
+PEU-RUBBER-MATS,FI_HEL,Covorase cauciuc Peugeot,accessories,Helsinki,Finland,139.81,134.84,147.01,139.81,121.36,160.78,0.1472,0,0,39.42
+PEU-COOLANT-PREMIX,IT_MIL,Lichid racire premix 5L,coolant,Milan,Italy,156.99,156.99,156.99,156.99,141.29,180.54,0.0,0,0,39.25
+PEU-HEADLIGHT-H7,CZ_PRG,Bec far H7,lighting,Prague,Czechia,154.72,154.13,155.58,155.58,138.72,177.93,0.1047,0,3,39.21
+PEU-COOLANT-PREMIX,PL_WAW,Lichid racire premix 5L,coolant,Warsaw,Poland,155.05,154.57,155.73,155.73,139.11,178.3,0.0869,0,3,39.19
+PEU-OIL-5W30-5L,DE_BER,Ulei motor 5W30 5L,maintenance,Berlin,Germany,154.6,154.6,154.6,154.6,139.14,177.79,0.0,0,0,38.65
+PEU-COOLANT-PREMIX,CZ_PRG,Lichid racire premix 5L,coolant,Prague,Czechia,152.89,152.47,153.49,153.49,137.22,175.82,0.0753,0,3,38.6
+PEU-HEADLIGHT-H7,ES_MAD,Bec far H7,lighting,Madrid,Spain,153.91,153.91,153.91,153.91,138.52,177.0,0.0,0,0,38.48
+PEU-HEADLIGHT-H7,RO_BUC,Bec far H7,lighting,Bucharest,Romania,152.18,151.74,152.79,152.79,136.57,175.0,0.076,0,3,38.43
+PEU-COOLANT-PREMIX,ES_MAD,Lichid racire premix 5L,coolant,Madrid,Spain,152.88,152.88,152.88,152.88,137.59,175.81,0.0,0,0,38.22
+PEU-COOLANT-PREMIX,RO_BUC,Lichid racire premix 5L,coolant,Bucharest,Romania,148.37,147.91,149.03,149.03,133.12,170.63,0.0838,0,3,37.51
+PEU-OIL-5W30-5L,NL_AMS,Ulei motor 5W30 5L,maintenance,Amsterdam,Netherlands,149.7,149.7,149.7,149.7,134.73,172.15,0.0,0,0,37.42
+PEU-COOLANT-PREMIX,DK_CPH,Lichid racire premix 5L,coolant,Copenhagen,Denmark,148.72,148.71,148.72,148.72,133.84,171.02,0.0,0,0,37.18
+PEU-OIL-5W30-5L,DK_CPH,Ulei motor 5W30 5L,maintenance,Copenhagen,Denmark,148.47,148.47,148.47,148.47,133.62,170.74,0.0,0,0,37.12
+PEU-AIR-FILTER,EE_TLL,Filtru aer motor,filters,Tallinn,Estonia,146.41,145.94,147.08,147.08,131.35,168.37,0.087,0,3,37.02
+PEU-OIL-5W30-5L,IT_MIL,Ulei motor 5W30 5L,maintenance,Milan,Italy,147.7,147.7,147.7,147.7,132.93,169.85,0.0,0,0,36.92
+PEU-OIL-5W30-5L,ES_MAD,Ulei motor 5W30 5L,maintenance,Madrid,Spain,147.36,147.36,147.36,147.36,132.63,169.47,0.0,0,0,36.84
+PEU-ADBLUE-10L,EE_TLL,AdBlue 10L,consumables,Tallinn,Estonia,145.58,145.19,146.13,146.13,130.67,167.42,0.073,0,3,36.75
+PEU-AIR-FILTER,FI_HEL,Filtru aer motor,filters,Helsinki,Finland,146.02,146.02,146.02,146.02,131.42,167.93,0.0,0,0,36.51
+PEU-AIR-FILTER,SE_STO,Filtru aer motor,filters,Stockholm,Sweden,145.78,145.78,145.78,145.78,131.21,167.65,0.0,0,0,36.44
+PEU-AIR-FILTER,FR_PAR,Filtru aer motor,filters,Paris,France,145.18,145.18,145.18,145.18,130.66,166.96,0.0,0,0,36.3
+PEU-ADBLUE-10L,FI_HEL,AdBlue 10L,consumables,Helsinki,Finland,144.96,144.96,144.96,144.96,130.46,166.7,0.0,0,0,36.24
+PEU-ADBLUE-10L,SE_STO,AdBlue 10L,consumables,Stockholm,Sweden,143.29,143.29,143.29,143.29,128.96,164.78,0.0,0,0,35.82
+PEU-RUBBER-MATS,EE_TLL,Covorase cauciuc Peugeot,accessories,Tallinn,Estonia,134.73,132.51,137.9,135.41,119.26,154.94,0.16160000000000002,0,3,35.68
+PEU-ADBLUE-10L,FR_PAR,AdBlue 10L,consumables,Paris,France,142.3,142.3,142.3,142.3,128.07,163.65,0.0,0,0,35.58
+PEU-AIR-FILTER,NL_AMS,Filtru aer motor,filters,Amsterdam,Netherlands,142.31,142.31,142.31,142.31,128.08,163.65,0.0,0,0,35.57
+PEU-AIR-FILTER,DE_BER,Filtru aer motor,filters,Berlin,Germany,142.27,142.27,142.27,142.27,128.04,163.61,0.0,0,0,35.57
+PEU-ADBLUE-10L,DE_BER,AdBlue 10L,consumables,Berlin,Germany,142.06,142.06,142.06,142.06,127.86,163.37,0.0,0,0,35.51
+PEU-AIR-FILTER,IT_MIL,Filtru aer motor,filters,Milan,Italy,141.07,141.07,141.07,141.07,126.97,162.23,0.0,0,0,35.26
+PEU-ADBLUE-10L,NL_AMS,AdBlue 10L,consumables,Amsterdam,Netherlands,140.34,140.34,140.34,140.34,126.31,161.39,0.0,0,0,35.08
+PEU-ADBLUE-10L,PL_WAW,AdBlue 10L,consumables,Warsaw,Poland,138.16,137.72,138.79,138.79,123.95,158.88,0.0876,0,3,34.93
+PEU-AIR-FILTER,DK_CPH,Filtru aer motor,filters,Copenhagen,Denmark,139.06,139.06,139.06,139.06,125.15,159.92,0.0,0,0,34.77
+PEU-BRAKE-PADS-F,FI_HEL,Placute frana fata,brakes,Helsinki,Finland,138.05,138.05,138.05,138.05,124.24,158.76,0.0,0,0,34.52
+PEU-AIR-FILTER,CZ_PRG,Filtru aer motor,filters,Prague,Czechia,136.15,135.67,136.84,136.84,122.11,156.58,0.096,0,3,34.47
+PEU-ADBLUE-10L,DK_CPH,AdBlue 10L,consumables,Copenhagen,Denmark,137.81,137.81,137.81,137.81,124.03,158.49,0.0,0,0,34.46
+PEU-AIR-FILTER,PL_WAW,Filtru aer motor,filters,Warsaw,Poland,135.66,135.14,136.41,136.41,121.62,156.01,0.1065,0,3,34.39
+PEU-ADBLUE-10L,IT_MIL,AdBlue 10L,consumables,Milan,Italy,137.47,137.47,137.47,137.47,123.73,158.09,0.0,0,0,34.36
+PEU-AIR-FILTER,ES_MAD,Filtru aer motor,filters,Madrid,Spain,136.87,136.87,136.87,136.87,123.19,157.4,0.0,0,0,34.21
+PEU-ADBLUE-10L,ES_MAD,AdBlue 10L,consumables,Madrid,Spain,136.48,136.48,136.48,136.48,122.83,156.95,0.0,0,0,34.12
+PEU-RUBBER-MATS,SE_STO,Covorase cauciuc Peugeot,accessories,Stockholm,Sweden,134.03,133.68,134.53,134.03,120.31,154.14,0.0244,0,0,33.83
+PEU-ADBLUE-10L,RO_BUC,AdBlue 10L,consumables,Bucharest,Romania,133.59,133.12,134.27,134.27,119.81,153.63,0.096,0,3,33.82
+PEU-AIR-FILTER,RO_BUC,Filtru aer motor,filters,Bucharest,Romania,133.23,132.75,133.93,133.93,119.47,153.22,0.0989,0,3,33.75
+PEU-BRAKE-PADS-F,EE_TLL,Placute frana fata,brakes,Tallinn,Estonia,127.85,126.67,129.6,129.6,114.0,147.02,0.2555,0,3,33.02
+PEU-ADBLUE-10L,CZ_PRG,AdBlue 10L,consumables,Prague,Czechia,130.01,129.53,130.68,130.68,116.58,149.51,0.0997,0,3,32.93
+PEU-RUBBER-MATS,FR_PAR,Covorase cauciuc Peugeot,accessories,Paris,France,127.73,127.73,127.73,127.73,114.96,146.89,0.0,0,0,31.93
+PEU-CABIN-CARBON,FI_HEL,Filtru habitaclu cu carbon,filters,Helsinki,Finland,127.65,127.65,127.65,127.65,114.89,146.8,0.0,0,0,31.91
+PEU-BRAKE-PADS-F,FR_PAR,Placute frana fata,brakes,Paris,France,126.94,126.94,126.94,126.94,114.25,145.98,0.0,0,0,31.73
+PEU-BRAKE-PADS-F,PL_WAW,Placute frana fata,brakes,Warsaw,Poland,120.83,119.69,122.53,122.53,107.72,138.95,0.2553,0,3,31.23
+PEU-BRAKE-PADS-F,SE_STO,Placute frana fata,brakes,Stockholm,Sweden,124.23,124.23,124.23,124.23,111.8,142.86,0.0,0,0,31.06
+PEU-RUBBER-MATS,DE_BER,Covorase cauciuc Peugeot,accessories,Berlin,Germany,123.53,123.53,123.53,123.53,111.17,142.06,0.0,0,0,30.89
+PEU-BRAKE-PADS-F,CZ_PRG,Placute frana fata,brakes,Prague,Czechia,118.88,117.69,120.64,120.64,105.92,136.71,0.2658,0,3,30.79
+PEU-SPARK-PLUG,FI_HEL,Bujie benzina,maintenance,Helsinki,Finland,123.04,123.03,123.04,123.04,110.73,141.49,0.0,0,0,30.76
+PEU-RUBBER-MATS,IT_MIL,Covorase cauciuc Peugeot,accessories,Milan,Italy,122.74,122.74,122.74,122.74,110.46,141.15,0.0,0,0,30.69
+PEU-CABIN-CARBON,EE_TLL,Filtru habitaclu cu carbon,filters,Tallinn,Estonia,121.39,121.07,121.84,121.84,108.97,139.6,0.0712,0,3,30.63
+PEU-SPARK-PLUG,EE_TLL,Bujie benzina,maintenance,Tallinn,Estonia,117.21,115.75,119.43,119.43,104.17,134.79,0.3564,0,3,30.62
+PEU-RUBBER-MATS,PL_WAW,Covorase cauciuc Peugeot,accessories,Warsaw,Poland,120.77,120.35,121.38,121.38,108.31,138.89,0.0974,0,3,30.58
+PEU-RUBBER-MATS,NL_AMS,Covorase cauciuc Peugeot,accessories,Amsterdam,Netherlands,122.2,122.2,122.2,122.2,109.98,140.54,0.0,0,0,30.56
+PEU-CABIN-CARBON,SE_STO,Filtru habitaclu cu carbon,filters,Stockholm,Sweden,120.74,120.74,120.74,120.74,108.67,138.86,0.0,0,0,30.19
+PEU-CABIN-CARBON,NL_AMS,Filtru habitaclu cu carbon,filters,Amsterdam,Netherlands,120.32,120.32,120.32,120.32,108.29,138.36,0.0,0,0,30.07
+PEU-BRAKE-PADS-F,NL_AMS,Placute frana fata,brakes,Amsterdam,Netherlands,120.23,120.23,120.23,120.23,108.21,138.26,0.0,0,0,30.05
+PEU-BRAKE-PADS-F,IT_MIL,Placute frana fata,brakes,Milan,Italy,120.05,120.05,120.05,120.05,108.05,138.06,0.0,0,0,30.01
+PEU-BRAKE-PADS-F,ES_MAD,Placute frana fata,brakes,Madrid,Spain,119.41,119.41,119.41,119.41,107.47,137.32,0.0,0,0,29.85
+PEU-CABIN-CARBON,FR_PAR,Filtru habitaclu cu carbon,filters,Paris,France,119.28,119.28,119.28,119.28,107.35,137.17,0.0,0,0,29.82
+PEU-RUBBER-MATS,RO_BUC,Covorase cauciuc Peugeot,accessories,Bucharest,Romania,117.63,117.2,118.24,118.24,105.48,135.27,0.0982,0,3,29.79
+PEU-RUBBER-MATS,ES_MAD,Covorase cauciuc Peugeot,accessories,Madrid,Spain,119.05,119.05,119.05,119.05,107.14,136.91,0.0,0,0,29.77
+PEU-BRAKE-PADS-F,DK_CPH,Placute frana fata,brakes,Copenhagen,Denmark,118.88,118.88,118.88,118.88,106.99,136.71,0.0,0,0,29.72
+PEU-BRAKE-PADS-F,DE_BER,Placute frana fata,brakes,Berlin,Germany,118.16,118.16,118.16,118.16,106.35,135.89,0.0,0,0,29.54
+PEU-SPARK-PLUG,FR_PAR,Bujie benzina,maintenance,Paris,France,117.77,117.77,117.77,117.77,105.99,135.44,0.0,0,0,29.45
+PEU-CABIN-CARBON,PL_WAW,Filtru habitaclu cu carbon,filters,Warsaw,Poland,116.25,115.92,116.71,116.71,104.33,133.68,0.076,0,3,29.35
+PEU-CABIN-CARBON,IT_MIL,Filtru habitaclu cu carbon,filters,Milan,Italy,116.98,116.98,116.98,116.98,105.28,134.53,0.0,0,0,29.25
+PEU-BRAKE-PADS-F,RO_BUC,Placute frana fata,brakes,Bucharest,Romania,112.9,111.81,114.53,114.53,100.63,129.84,0.2527,0,3,29.21
+PEU-SPARK-PLUG,NL_AMS,Bujie benzina,maintenance,Amsterdam,Netherlands,116.51,116.51,116.51,116.51,104.86,133.98,0.0,0,0,29.12
+PEU-CABIN-CARBON,DE_BER,Filtru habitaclu cu carbon,filters,Berlin,Germany,116.32,116.32,116.32,116.32,104.69,133.77,0.0,0,0,29.08
+PEU-SPARK-PLUG,PL_WAW,Bujie benzina,maintenance,Warsaw,Poland,110.39,108.93,112.6,112.6,98.04,126.94,0.3513,0,3,28.9
+PEU-RUBBER-MATS,CZ_PRG,Covorase cauciuc Peugeot,accessories,Prague,Czechia,114.21,113.87,114.71,114.71,102.48,131.35,0.083,0,3,28.87
+PEU-SPARK-PLUG,RO_BUC,Bujie benzina,maintenance,Bucharest,Romania,109.28,107.79,111.55,111.55,97.01,125.67,0.3548,0,3,28.66
+PEU-SPARK-PLUG,CZ_PRG,Bujie benzina,maintenance,Prague,Czechia,108.69,107.19,110.97,110.97,96.47,124.99,0.3593,0,3,28.52
+PEU-BRAKE-FLUID-DOT4,EE_TLL,Lichid frana DOT4 1L,brakes,Tallinn,Estonia,109.89,108.89,111.37,111.37,98.0,126.38,0.2427,0,3,28.38
+PEU-CABIN-CARBON,CZ_PRG,Filtru habitaclu cu carbon,filters,Prague,Czechia,112.17,111.87,112.58,112.58,100.69,128.99,0.0695,0,3,28.3
+PEU-CABIN-CARBON,ES_MAD,Filtru habitaclu cu carbon,filters,Madrid,Spain,113.1,113.1,113.1,113.1,101.79,130.06,0.0,0,0,28.27
+PEU-SPARK-PLUG,IT_MIL,Bujie benzina,maintenance,Milan,Italy,111.98,111.98,111.98,111.98,100.78,128.78,0.0,0,0,28.0
+PEU-BRAKE-FLUID-DOT4,FR_PAR,Lichid frana DOT4 1L,brakes,Paris,France,110.15,110.15,110.15,110.15,99.13,126.67,0.0,0,0,27.54
+PEU-SPARK-PLUG,SE_STO,Bujie benzina,maintenance,Stockholm,Sweden,110.15,110.15,110.15,110.15,99.14,126.68,0.0,0,0,27.54
+PEU-CABIN-CARBON,RO_BUC,Filtru habitaclu cu carbon,filters,Bucharest,Romania,108.56,108.24,109.01,109.01,97.41,124.84,0.079,0,3,27.43
+PEU-BRAKE-FLUID-DOT4,SE_STO,Lichid frana DOT4 1L,brakes,Stockholm,Sweden,109.52,109.52,109.52,109.52,98.57,125.95,0.0,0,0,27.38
+PEU-BRAKE-FLUID-DOT4,PL_WAW,Lichid frana DOT4 1L,brakes,Warsaw,Poland,105.43,104.4,106.98,106.98,93.96,121.25,0.2641,0,3,27.29
+PEU-RUBBER-MATS,DK_CPH,Covorase cauciuc Peugeot,accessories,Copenhagen,Denmark,108.72,108.72,108.72,108.72,97.84,125.02,0.0,0,0,27.18
+PEU-SPARK-PLUG,DE_BER,Bujie benzina,maintenance,Berlin,Germany,107.88,107.88,107.88,107.88,97.09,124.07,0.0,0,0,26.98
+PEU-CABIN-CARBON,DK_CPH,Filtru habitaclu cu carbon,filters,Copenhagen,Denmark,107.39,107.39,107.39,107.39,96.65,123.5,0.0,0,0,26.85
+PEU-BRAKE-FLUID-DOT4,FI_HEL,Lichid frana DOT4 1L,brakes,Helsinki,Finland,107.32,107.32,107.32,107.32,96.59,123.42,0.0,0,0,26.83
+PEU-SPARK-PLUG,DK_CPH,Bujie benzina,maintenance,Copenhagen,Denmark,106.96,106.96,106.96,106.96,96.27,123.01,0.0,0,0,26.74
+PEU-SPARK-PLUG,ES_MAD,Bujie benzina,maintenance,Madrid,Spain,106.88,106.88,106.88,106.88,96.19,122.91,0.0,0,0,26.72
+PEU-BRAKE-FLUID-DOT4,RO_BUC,Lichid frana DOT4 1L,brakes,Bucharest,Romania,101.36,100.39,102.81,102.81,90.35,116.57,0.2488,0,3,26.22
+PEU-BRAKE-FLUID-DOT4,IT_MIL,Lichid frana DOT4 1L,brakes,Milan,Italy,103.45,103.45,103.45,103.45,93.11,118.97,0.0,0,0,25.86
+PEU-BRAKE-FLUID-DOT4,NL_AMS,Lichid frana DOT4 1L,brakes,Amsterdam,Netherlands,103.32,103.32,103.32,103.32,92.99,118.82,0.0,0,0,25.83
+PEU-BRAKE-FLUID-DOT4,CZ_PRG,Lichid frana DOT4 1L,brakes,Prague,Czechia,99.63,98.64,101.11,101.11,88.77,114.58,0.2549,0,3,25.81
+PEU-BRAKE-FLUID-DOT4,DE_BER,Lichid frana DOT4 1L,brakes,Berlin,Germany,102.61,102.61,102.61,102.61,92.35,118.0,0.0,0,0,25.65
+PEU-BRAKE-FLUID-DOT4,DK_CPH,Lichid frana DOT4 1L,brakes,Copenhagen,Denmark,100.67,100.67,100.67,100.67,90.6,115.77,0.0,0,0,25.17
+PEU-BRAKE-FLUID-DOT4,ES_MAD,Lichid frana DOT4 1L,brakes,Madrid,Spain,98.29,98.29,98.29,98.29,88.46,113.03,0.0,0,0,24.57
+PEU-BATT-70AH,FR_PAR,Baterie 70Ah AGM/EFB,battery,Paris,France,82.92,82.92,82.92,82.92,74.63,95.36,0.0,0,0,20.73
+PEU-BATT-70AH,IT_MIL,Baterie 70Ah AGM/EFB,battery,Milan,Italy,81.34,81.34,81.34,81.34,73.21,93.54,0.0,0,0,20.33
+PEU-BATT-70AH,NL_AMS,Baterie 70Ah AGM/EFB,battery,Amsterdam,Netherlands,80.46,80.46,80.46,80.46,72.42,92.53,0.0,0,0,20.11
+PEU-BATT-70AH,PL_WAW,Baterie 70Ah AGM/EFB,battery,Warsaw,Poland,78.83,78.57,79.2,79.2,70.71,90.65,0.0902,0,3,19.94
+PEU-BATT-70AH,DK_CPH,Baterie 70Ah AGM/EFB,battery,Copenhagen,Denmark,79.54,79.54,79.54,79.54,71.59,91.47,0.0,0,0,19.88
+PEU-BATT-70AH,RO_BUC,Baterie 70Ah AGM/EFB,battery,Bucharest,Romania,77.7,77.47,78.04,78.04,69.72,89.36,0.082,0,3,19.64
+PEU-BATT-70AH,DE_BER,Baterie 70Ah AGM/EFB,battery,Berlin,Germany,78.14,78.14,78.14,78.14,70.32,89.86,0.0,0,0,19.54
+PEU-BATT-70AH,ES_MAD,Baterie 70Ah AGM/EFB,battery,Madrid,Spain,77.77,77.77,77.77,77.77,70.0,89.44,0.0,0,0,19.44
+PEU-BATT-70AH,CZ_PRG,Baterie 70Ah AGM/EFB,battery,Prague,Czechia,77.09,76.95,77.3,77.3,69.25,88.66,0.0517,0,3,19.41
+PEU-AC-REFILL,FI_HEL,Kit incarcare clima R134a/R1234yf,ac_cooling,Helsinki,Finland,60.73,60.73,60.73,60.73,54.66,69.84,0.0,0,0,15.18
+PEU-AC-REFILL,EE_TLL,Kit incarcare clima R134a/R1234yf,ac_cooling,Tallinn,Estonia,59.99,59.88,60.14,60.14,53.89,68.99,0.0432,0,3,15.1
+PEU-AC-REFILL,FR_PAR,Kit incarcare clima R134a/R1234yf,ac_cooling,Paris,France,59.28,59.28,59.28,59.28,53.35,68.17,0.0,0,0,14.82
+PEU-AC-REFILL,SE_STO,Kit incarcare clima R134a/R1234yf,ac_cooling,Stockholm,Sweden,59.26,59.26,59.26,59.26,53.34,68.15,0.0,0,0,14.81
+PEU-AC-REFILL,RO_BUC,Kit incarcare clima R134a/R1234yf,ac_cooling,Bucharest,Romania,57.57,57.35,57.88,57.88,51.62,66.2,0.0914,0,3,14.58
+PEU-AC-REFILL,PL_WAW,Kit incarcare clima R134a/R1234yf,ac_cooling,Warsaw,Poland,57.35,57.27,57.45,57.45,51.54,65.95,0.0328,0,3,14.41
+PEU-AC-REFILL,NL_AMS,Kit incarcare clima R134a/R1234yf,ac_cooling,Amsterdam,Netherlands,57.1,57.1,57.1,57.1,51.39,65.67,0.0,0,0,14.28
+PEU-AC-REFILL,IT_MIL,Kit incarcare clima R134a/R1234yf,ac_cooling,Milan,Italy,56.94,56.94,56.94,56.94,51.25,65.48,0.0,0,0,14.23
+PEU-AC-REFILL,CZ_PRG,Kit incarcare clima R134a/R1234yf,ac_cooling,Prague,Czechia,56.56,56.49,56.67,56.67,50.84,65.04,0.0341,0,3,14.2
+PEU-AC-REFILL,DK_CPH,Kit incarcare clima R134a/R1234yf,ac_cooling,Copenhagen,Denmark,56.19,56.19,56.19,56.19,50.57,64.62,0.0,0,0,14.05
+PEU-AC-REFILL,ES_MAD,Kit incarcare clima R134a/R1234yf,ac_cooling,Madrid,Spain,55.96,55.96,55.96,55.96,50.36,64.35,0.0,0,0,13.99
+PEU-AC-REFILL,DE_BER,Kit incarcare clima R134a/R1234yf,ac_cooling,Berlin,Germany,55.83,55.83,55.83,55.83,50.25,64.21,0.0,0,0,13.96
+PEU-SUMMER-TIRE-205,EE_TLL,Anvelopa vara 205/55R16,tires,Tallinn,Estonia,42.19,42.06,42.38,42.38,37.85,48.52,0.0894,0,3,10.67
+PEU-SUMMER-TIRE-205,FI_HEL,Anvelopa vara 205/55R16,tires,Helsinki,Finland,41.19,41.19,41.19,41.19,37.07,47.36,0.0,0,0,10.29
+PEU-SUMMER-TIRE-205,SE_STO,Anvelopa vara 205/55R16,tires,Stockholm,Sweden,40.91,40.91,40.91,40.91,36.82,47.05,0.0,0,0,10.23
+PEU-SUMMER-TIRE-205,PL_WAW,Anvelopa vara 205/55R16,tires,Warsaw,Poland,39.67,39.56,39.82,39.82,35.61,45.62,0.0737,0,3,10.01
+PEU-SUMMER-TIRE-205,CZ_PRG,Anvelopa vara 205/55R16,tires,Prague,Czechia,39.51,39.38,39.69,39.69,35.44,45.43,0.0875,0,3,9.99
+PEU-SUMMER-TIRE-205,DK_CPH,Anvelopa vara 205/55R16,tires,Copenhagen,Denmark,39.79,39.79,39.79,39.79,35.81,45.75,0.0,0,0,9.94
+PEU-SUMMER-TIRE-205,ES_MAD,Anvelopa vara 205/55R16,tires,Madrid,Spain,39.77,39.77,39.77,39.77,35.79,45.73,0.0,0,0,9.94
+PEU-SUMMER-TIRE-205,IT_MIL,Anvelopa vara 205/55R16,tires,Milan,Italy,39.68,39.68,39.68,39.68,35.71,45.63,0.0,0,0,9.92
+PEU-SUMMER-TIRE-205,NL_AMS,Anvelopa vara 205/55R16,tires,Amsterdam,Netherlands,39.67,39.67,39.67,39.67,35.7,45.62,0.0,0,0,9.92
+PEU-SUMMER-TIRE-205,RO_BUC,Anvelopa vara 205/55R16,tires,Bucharest,Romania,39.1,38.97,39.29,39.29,35.07,44.97,0.0923,0,3,9.9
+PEU-SUMMER-TIRE-205,FR_PAR,Anvelopa vara 205/55R16,tires,Paris,France,39.58,39.58,39.58,39.58,35.62,45.51,0.0,0,0,9.89
+PEU-SUMMER-TIRE-205,DE_BER,Anvelopa vara 205/55R16,tires,Berlin,Germany,39.35,39.35,39.35,39.35,35.42,45.26,0.0,0,0,9.84

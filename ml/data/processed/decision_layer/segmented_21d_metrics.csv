@@ -1,0 +1,6 @@
+segment,n_rows,actual_units,predicted_units,MAE,WAPE_percent,bias_units
+overall_21d,648,86023.0,85198.9481,2.4041,1.8109,-1.2717
+high_volume_21d,648,86023.0,85198.9481,2.4041,1.8109,-1.2717
+rare_intermittent_21d,0,0.0,0.0,0.0,0.0,0.0
+volatile_21d,0,0.0,0.0,0.0,0.0,0.0
+weather_sensitive_category_21d,216,38545.0,37814.8841,4.0461,2.2673,-3.3802
