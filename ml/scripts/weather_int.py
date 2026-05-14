@@ -30,6 +30,8 @@ HORIZON_DAYS = 21
 WINDOW_CANDIDATES = [7, 14, 21, 28, 42, 56]
 MONTH_LABELS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 PRIORITY_ORDER = {"critical": 0, "high": 1, "medium": 2, "low": 3}
+EXPORT_DIAGNOSTIC_CHARTS = False
+EXPORT_OUTLIER_FORECAST_CHARTS = False
 
 WEATHER_TRIGGERS = [
     "cold_snap_flag",
@@ -713,7 +715,7 @@ def create_static_charts(df, scores, location_scores, window_summary, window_by_
             cbar.set_label("Index sezonier")
             save_static(fig, "02_monthly_seasonality_heatmap.png")
 
-    if not window_summary.empty:
+    if EXPORT_DIAGNOSTIC_CHARTS and not window_summary.empty:
         best = window_summary.loc[window_summary["WAPE_percent"].idxmin()]
         fig, ax = plt.subplots(figsize=(10, 5.5))
         ax.plot(window_summary["window_days"], window_summary["WAPE_percent"], marker="o", linewidth=2.5, color="#1f77b4")
@@ -725,7 +727,7 @@ def create_static_charts(df, scores, location_scores, window_summary, window_by_
         ax.set_xticks(window_summary["window_days"])
         save_static(fig, "03_window_selection_wape.png")
 
-    if not window_by_category.empty:
+    if EXPORT_DIAGNOSTIC_CHARTS and not window_by_category.empty:
         pivot = window_by_category.pivot(index="category", columns="window_days", values="WAPE_percent").sort_index()
         fig, ax = plt.subplots(figsize=(11, 7))
         im = ax.imshow(pivot.values, aspect="auto", cmap="YlOrRd")
@@ -1381,6 +1383,9 @@ def refresh_legacy_temp_vs_sales_plot(df):
 
 
 def refresh_legacy_forecast_plot(df, location_scores):
+    if not EXPORT_OUTLIER_FORECAST_CHARTS:
+        return
+
     forecast_path = PROCESSED_DIR / "forecast_30d.csv"
     selected = most_volatile_product_locations(location_scores, limit=4)
     if not forecast_path.exists() or selected.empty:
@@ -1480,7 +1485,7 @@ def create_interactive_charts(df, scores, location_scores, window_summary, alert
         )
         fig.write_html(CHART_DIR / "02_seasonality_vs_weather_sensitivity.html")
 
-    if not window_summary.empty:
+    if EXPORT_DIAGNOSTIC_CHARTS and not window_summary.empty:
         fig = px.line(
             window_summary,
             x="window_days",

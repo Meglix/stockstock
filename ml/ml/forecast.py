@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Tuple
@@ -12,6 +13,8 @@ import pandas as pd
 
 from ml.data_generator import LOCATIONS, _fuel_price, _mobility_index
 from ml.features import CATEGORICAL_FEATURES, FEATURE_COLUMNS, NUMERIC_FEATURES, add_time_features
+
+OPEN_METEO_FORECAST_FILE = "weather_forecast_open_meteo.csv"
 
 
 def _lag_values(history: List[float]) -> Dict[str, float]:
@@ -158,6 +161,8 @@ def _normalize_inputs(parts: pd.DataFrame, locations: pd.DataFrame, weather: pd.
     for col in ["cold_snap_flag", "heatwave_flag", "weather_spike_flag", "temperature_drop_flag", "temperature_rise_flag"]:
         if col not in weather.columns:
             weather[col] = 0
+    if "weather_source" not in weather.columns:
+        weather["weather_source"] = "synthetic_or_historical"
 
     for col in ["is_payday", "is_payday_window", "is_holiday", "is_school_holiday", "promotion_flag", "service_campaign_flag"]:
         if col not in calendar.columns:
@@ -242,7 +247,54 @@ def _fallback_weather_row(d, loc_id: str, history: pd.DataFrame, loc_profile_by_
         "temperature_rise_flag": int(change_3d >= 5),
         "fuel_price_eur_l": _fuel_price(d, profile) if profile is not None else 1.7,
         "mobility_index": _mobility_index(d),
+        "weather_source": "synthetic_fallback",
     }
+
+
+def _overlay_open_meteo_weather(weather: pd.DataFrame, raw_path: Path, future_dates) -> pd.DataFrame:
+    if os.getenv("USE_OPEN_METEO_WEATHER", "1").lower() in {"0", "false", "no"}:
+        return weather
+    open_meteo_path = raw_path / OPEN_METEO_FORECAST_FILE
+    if not open_meteo_path.exists():
+        return weather
+
+    live = pd.read_csv(open_meteo_path)
+    required = {"date", "location_id", "temperature_c", "rain_mm", "snow_cm"}
+    if live.empty or not required.issubset(live.columns):
+        return weather
+
+    future_date_strings = {d.isoformat() for d in future_dates}
+    live = live.copy()
+    live["date"] = pd.to_datetime(live["date"]).dt.date.astype(str)
+    live["location_id"] = live["location_id"].astype(str)
+    live = live[live["date"].isin(future_date_strings)].copy()
+    if live.empty:
+        return weather
+
+    for col in ["temp_change_1d_c", "temp_change_3d_c", "abs_temp_change_3d_c"]:
+        if col not in live.columns:
+            live[col] = 0.0
+    for col in ["cold_snap_flag", "heatwave_flag", "weather_spike_flag", "temperature_drop_flag", "temperature_rise_flag"]:
+        if col not in live.columns:
+            live[col] = 0
+    if "weather_source" not in live.columns:
+        live["weather_source"] = "open_meteo_forecast"
+
+    keep_cols = [col for col in weather.columns if col in live.columns]
+    for col in weather.columns:
+        if col not in live.columns:
+            live[col] = np.nan
+    live = live[weather.columns].copy()
+    live_keys = set(zip(live["date"].astype(str), live["location_id"].astype(str)))
+    base = weather[
+        [
+            (str(row.date), str(row.location_id)) not in live_keys
+            for row in weather[["date", "location_id"]].itertuples(index=False)
+        ]
+    ].copy()
+    combined = pd.concat([base, live], ignore_index=True)
+    combined = combined.sort_values(["location_id", "date"]).reset_index(drop=True)
+    return combined
 
 
 def _extend_weather_if_needed(weather: pd.DataFrame, locations: pd.DataFrame, future_dates, loc_profile_by_id: Dict[str, object]) -> pd.DataFrame:
@@ -294,6 +346,7 @@ def run_forecast(
     model_dir: str | Path = "models",
     processed_dir: str | Path = "data/processed",
     horizon: int = 30,
+    start_date: str | None = None,
 ) -> pd.DataFrame:
     raw_path = Path(raw_dir)
     model_path = Path(model_dir)
@@ -317,7 +370,9 @@ def run_forecast(
 
     sales["date"] = pd.to_datetime(sales["date"])
     last_date = sales["date"].max().date()
-    future_dates = pd.date_range(last_date + pd.Timedelta(days=1), periods=horizon, freq="D").date
+    forecast_start = pd.to_datetime(start_date).date() if start_date else last_date + pd.Timedelta(days=1)
+    future_dates = pd.date_range(forecast_start, periods=horizon, freq="D").date
+    weather = _overlay_open_meteo_weather(weather, raw_path, future_dates)
     weather = _extend_weather_if_needed(weather, locations, future_dates, loc_profile_by_id)
 
     weather_idx = weather.set_index(["date", "location_id"])
@@ -368,6 +423,7 @@ def run_forecast(
                     "abs_temp_change_3d_c": float(w["abs_temp_change_3d_c"]),
                     "rain_mm": float(w["rain_mm"]),
                     "snow_cm": float(w["snow_cm"]),
+                    "weather_source": str(w.get("weather_source", "synthetic_or_historical")),
                     "cold_snap_flag": int(w["cold_snap_flag"]),
                     "heatwave_flag": int(w["heatwave_flag"]),
                     "weather_spike_flag": int(w["weather_spike_flag"]),
@@ -440,6 +496,7 @@ def run_forecast(
                     "temp_change_3d_c": row["temp_change_3d_c"],
                     "rain_mm": row["rain_mm"],
                     "snow_cm": row["snow_cm"],
+                    "weather_source": str(row.get("weather_source", "synthetic_or_historical")),
                     "weather_spike_flag": row["weather_spike_flag"],
                     "cold_snap_flag": row["cold_snap_flag"],
                     "heatwave_flag": row["heatwave_flag"],

@@ -28,7 +28,7 @@ def resolved_location_id(current_user: dict, requested_location: str | None = No
     return default_location_id(current_user)
 
 
-def ml_service_get(path: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
+def ml_service_get(path: str, params: dict[str, Any] | None = None) -> Any:
     url = f"{DEFAULT_ML_SERVICE_BASE_URL}{path}"
     with httpx.Client(timeout=DEFAULT_ML_TIMEOUT_SECONDS) as client:
         response = client.get(url, params=params)
@@ -36,8 +36,31 @@ def ml_service_get(path: str, params: dict[str, Any] | None = None) -> dict[str,
         return response.json()
 
 
-def safe_ml_service_get(path: str, params: dict[str, Any] | None = None) -> tuple[dict[str, Any] | list[Any], str | None]:
+def safe_ml_service_get(path: str, params: dict[str, Any] | None = None) -> tuple[Any, str | None]:
     try:
         return ml_service_get(path, params=params), None
     except (httpx.HTTPError, ValueError) as error:
         return [], str(error)
+
+
+def ml_service_post(
+    path: str,
+    payload: dict[str, Any] | None = None,
+    params: dict[str, Any] | None = None,
+) -> Any:
+    url = f"{DEFAULT_ML_SERVICE_BASE_URL}{path}"
+    with httpx.Client(timeout=DEFAULT_ML_TIMEOUT_SECONDS) as client:
+        response = client.post(url, params=params, json=payload)
+        response.raise_for_status()
+        return response.json()
+
+
+def safe_ml_service_post(
+    path: str,
+    payload: dict[str, Any] | None = None,
+    params: dict[str, Any] | None = None,
+) -> tuple[Any, str | None]:
+    try:
+        return ml_service_post(path, payload=payload, params=params), None
+    except (httpx.HTTPError, ValueError) as error:
+        return {}, str(error)

@@ -13,6 +13,7 @@ from app.inventory.routers.orders import router as orders_router
 # Analytics routers
 from app.analytics.routers.dashboard import router as dashboard_router
 from app.analytics.routers.notifications import router as notifications_router
+from app.analytics.routers.ml import router as ml_router
 
 
 app = FastAPI(title="Stock Optimizer Backend", version="0.1.0")
@@ -32,3 +33,4 @@ app.include_router(stock_router)
 app.include_router(orders_router)
 app.include_router(dashboard_router)
 app.include_router(notifications_router)
+app.include_router(ml_router)

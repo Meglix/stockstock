@@ -44,6 +44,7 @@ Pentru o integrare reala, backend-ul ar trebui sa trimita sau sa puna la dispozi
 | Suppliers | `supplier_id`, `supplier_name`, `reliability_score` | Alegere furnizor |
 | Calendar/events | `date`, `event_type`, `promotion_flag` | Uplift calendar |
 | Weather | `date`, `location_id`, `temperature_c`, `snow_cm`, `rain_mm` | Driver extern |
+| Open-Meteo forecast | `date`, `location_id`, `temperature_c`, `rain_mm`, `snow_cm`, `cold_snap_flag`, `heatwave_flag` | Live weather for future alerts |
 
 ## Output-uri ML
 
@@ -77,6 +78,7 @@ Campuri principale:
 | `temperature_c` | float | Temperatura folosita ca feature |
 | `cold_snap_flag` | int | Indicator frig |
 | `heatwave_flag` | int | Indicator canicula |
+| `weather_source` | string | `open_meteo_forecast` sau fallback sintetic |
 | `segment_name` | string | Segment operational |
 
 Exemplu de consum:
@@ -164,6 +166,29 @@ Tipuri de alerte:
 - `overstock`;
 - `weather_demand_spike`.
 
+### Live Open-Meteo weather
+
+Fisier optional:
+
+```text
+data/raw/weather_forecast_open_meteo.csv
+```
+
+Endpoint:
+
+```text
+GET /data/open-meteo-weather
+GET /data/open-meteo-weather?location_id=FI_HEL
+```
+
+Comanda de refresh:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\fetch_open_meteo_weather.py --forecast-days 16
+```
+
+Cand fisierul exista, `run_forecast` il foloseste automat pentru zilele care se suprapun cu forecastul ML.
+
 ### Decision layer
 
 Director:
@@ -182,6 +207,69 @@ GET /decision/map
 GET /decision/explainability
 GET /decision/model-monitoring
 GET /decision/integrations
+```
+
+## Dashboard full stack endpoints
+
+Pentru frontend exista si endpoint-uri agregate care corespund direct celor 3 zone recomandate de dashboard.
+
+### 1. Location Risk Overview
+
+```text
+GET /dashboard/location-risk
+GET /dashboard/location-risk?location_id=FI_HEL
+```
+
+Returneaza:
+
+- KPI-uri pe locatie sau global;
+- randuri din risk map;
+- top stock risks.
+
+### 2. Forecast + Weather
+
+```text
+GET /dashboard/forecast-weather?sku=PEU-WF-WINTER-5L&location_id=FI_HEL&horizon=16
+```
+
+Returneaza:
+
+- forecast ML;
+- weather forecast Open-Meteo, cand exista;
+- sumar cu total units, revenue, date range si `weather_source`.
+
+### 3. Alerts & Recommended Orders
+
+```text
+GET /dashboard/alerts-orders?location_id=FI_HEL&priority=high
+```
+
+Returneaza:
+
+- decision alerts;
+- simple alerts;
+- recommended orders;
+- KPI-uri pentru actiuni.
+
+### Endpoint combinat
+
+```text
+GET /dashboard/location?location_id=FI_HEL&sku=PEU-WF-WINTER-5L&horizon=16
+```
+
+Returneaza toate cele 3 zone intr-un singur payload:
+
+```json
+{
+  "dashboard": "stock_risk_dashboard",
+  "location_id": "FI_HEL",
+  "sku": "PEU-WF-WINTER-5L",
+  "sections": {
+    "location_risk_overview": {},
+    "forecast_weather": {},
+    "alerts_recommended_orders": {}
+  }
+}
 ```
 
 ## Semnificatia campurilor cheie

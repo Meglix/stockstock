@@ -31,6 +31,7 @@ Datele includ:
 - vreme simulata;
 - evenimente calendaristice, payday, promotii si campanii service;
 - fuel price si mobility index.
+- optional, forecast meteo live Open-Meteo pentru urmatoarele 1-16 zile.
 
 Datasetul este high-signal pentru demo: sezonalitatea, vremea si efectele de calendar sunt intentionat clare, astfel incat modelul si recomandarile sa fie usor de explicat.
 
@@ -72,6 +73,7 @@ Forecastul contine si campuri pentru calibrare si model two-stage:
 - `prediction_scope`;
 - `local_calibration_weight`;
 - `local_calibration_scale`.
+- `weather_source`, pentru a diferentia vremea sintetica de `open_meteo_forecast`.
 
 ## Metrici curente
 

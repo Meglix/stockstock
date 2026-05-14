@@ -18,6 +18,26 @@ Orizont forecast: 30 zile
 
 ## Pasii de prezentare
 
+### 0. Dashboard complet
+
+Endpoint:
+
+```text
+GET /dashboard/location?location_id=FI_HEL&sku=PEU-WF-WINTER-5L&horizon=16
+```
+
+Ce arati:
+
+- Location Risk Overview;
+- Forecast + Weather;
+- Alerts & Recommended Orders.
+
+Mesaj:
+
+```text
+Frontend-ul poate incarca toate cele 3 zone ale dashboardului dintr-un singur endpoint agregat.
+```
+
 ### 1. Health check
 
 Endpoint:

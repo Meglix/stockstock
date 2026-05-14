@@ -59,6 +59,34 @@ class MlOutputSmokeTests(unittest.TestCase):
         self.assertTrue((forecast["predicted_quantity"] >= 0).all())
         self.assertTrue((forecast["predicted_revenue_eur"] >= 0).all())
 
+    def test_optional_open_meteo_output_contract(self) -> None:
+        path = RAW_DIR / "weather_forecast_open_meteo.csv"
+        if not path.exists():
+            self.skipTest("Open-Meteo forecast file has not been fetched yet.")
+
+        required_columns = {
+            "date",
+            "location_id",
+            "temperature_c",
+            "rain_mm",
+            "snow_cm",
+            "temp_change_1d_c",
+            "temp_change_3d_c",
+            "abs_temp_change_3d_c",
+            "cold_snap_flag",
+            "heatwave_flag",
+            "weather_spike_flag",
+            "temperature_drop_flag",
+            "temperature_rise_flag",
+            "weather_source",
+        }
+        weather = pd.read_csv(path)
+        self.assertTrue(required_columns.issubset(set(weather.columns)))
+        self.assertEqual(weather["location_id"].nunique(), 12)
+        self.assertTrue(set(weather["weather_source"]).issubset({"open_meteo_forecast"}))
+        self.assertTrue((weather["rain_mm"] >= 0).all())
+        self.assertTrue((weather["snow_cm"] >= 0).all())
+
     def test_recommendations_output_contract(self) -> None:
         path = PROCESSED_DIR / "recommendations.csv"
         required_columns = {
@@ -158,6 +186,24 @@ class ApiSmokeTests(unittest.TestCase):
         self.assertEqual(kpis["total_skus"], 18)
         self.assertEqual(kpis["total_locations"], 12)
         self.assertEqual(kpis["forecast_rows"], 6480)
+
+        if (RAW_DIR / "weather_forecast_open_meteo.csv").exists():
+            live_weather = main.open_meteo_weather(limit=3)
+            self.assertGreater(len(live_weather), 0)
+            self.assertTrue(all(row["weather_source"] == "open_meteo_forecast" for row in live_weather))
+
+        dashboard = main.dashboard_location(
+            location_id="FI_HEL",
+            sku="PEU-WF-WINTER-5L",
+            horizon=16,
+            limit=3,
+        )
+        self.assertEqual(dashboard["dashboard"], "stock_risk_dashboard")
+        self.assertIn("location_risk_overview", dashboard["sections"])
+        self.assertIn("forecast_weather", dashboard["sections"])
+        self.assertIn("alerts_recommended_orders", dashboard["sections"])
+        self.assertGreater(len(dashboard["sections"]["forecast_weather"]["forecast"]), 0)
+        self.assertGreater(len(dashboard["sections"]["alerts_recommended_orders"]["recommended_orders"]), 0)
 
 
 if __name__ == "__main__":

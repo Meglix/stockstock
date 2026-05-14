@@ -1,0 +1,257 @@
+GitHub Projects - ML Tasks pentru Stock Optimizer Automotive
+============================================================
+
+Coloane recomandate:
+- Backlog
+- To Do
+- In Progress
+- Review
+- Done
+
+Labels recomandate:
+- ml
+- data
+- feature-engineering
+- forecasting
+- baseline
+- model
+- clustering
+- recommendations
+- alerts
+- inventory
+- decision-layer
+- integration
+- api
+- evaluation
+- testing
+- docs
+- demo
+- future
+- mlops
+- monitoring
+
+
+Taskuri principale ML
+=====================
+
+1. Define ML scope and responsibilities
+Labels: ml, docs
+Status sugerat: Done
+Acceptance criteria:
+- ML responsibilities are separated from backend/frontend work.
+- README explains what the ML module delivers.
+- Limitations are documented.
+
+2. Design synthetic automotive stock dataset
+Labels: data, ml
+Status sugerat: Done
+Acceptance criteria:
+- Dataset includes sales, products, locations, inventory, weather, calendar and suppliers.
+- Dataset is suitable for stock optimization demo.
+- Dataset summary is generated.
+
+3. Generate EU sales dataset with SKU-location history
+Labels: data
+Status sugerat: Done
+Acceptance criteria:
+- Sales history exists in data/raw/sales_history.csv.
+- Dataset includes 12 EU locations and 18 SKUs.
+- Each SKU-location pair has daily history.
+
+4. Add weather, calendar, payday and campaign features
+Labels: feature-engineering, data
+Status sugerat: Done
+Acceptance criteria:
+- Weather features include temperature, rain, snow, cold snap and heatwave.
+- Calendar features include payday, holidays, promotions and service campaigns.
+- Features are available for training and forecast generation.
+
+5. Add lag and rolling-window time series features
+Labels: feature-engineering, forecasting
+Status sugerat: Done
+Acceptance criteria:
+- Lag features exist for 1, 7, 14 and 28 days.
+- Rolling windows exist for mean/std/max/min.
+- Features are used by the forecasting model.
+
+6. Train baseline rolling mean forecast
+Labels: forecasting, baseline, evaluation
+Status sugerat: Done
+Acceptance criteria:
+- Rolling mean baseline is computed.
+- Baseline metrics are saved.
+- Baseline is used for model comparison.
+
+7. Train global demand forecasting model
+Labels: forecasting, model, ml
+Status sugerat: Done
+Acceptance criteria:
+- Model predicts quantity_sold.
+- Model uses SKU, location, weather, calendar and time-series features.
+- Trained model is saved in models/.
+
+8. Add local calibration / guard layer for forecast
+Labels: forecasting, model
+Status sugerat: Done
+Acceptance criteria:
+- Forecast output includes raw and guarded predictions.
+- Calibration metadata is saved.
+- Guard layer avoids unstable local adjustments.
+
+9. Add two-stage logic for intermittent demand
+Labels: forecasting, model
+Status sugerat: Done
+Acceptance criteria:
+- Sale probability is estimated.
+- Conditional quantity is estimated when sale probability is active.
+- Output includes two-stage prediction fields.
+
+10. Evaluate forecast on holdout period
+Labels: evaluation, forecasting
+Status sugerat: Done
+Acceptance criteria:
+- Holdout period is documented.
+- Metrics include MAE, RMSE, MAPE, WAPE and R2.
+- Model metrics are saved in data/processed/model_metrics.json.
+
+11. Add 21-day operational forecast metrics
+Labels: evaluation, inventory
+Status sugerat: Done
+Acceptance criteria:
+- 21-day metrics are computed.
+- Metrics support inventory planning use case.
+- Segmented 21-day metrics are saved.
+
+12. Segment SKU-location pairs with KMeans
+Labels: clustering, ml
+Status sugerat: Done
+Acceptance criteria:
+- KMeans model is trained on SKU-location behavior.
+- Output segments are saved in data/processed/segments_kmeans.csv.
+- Segment names are business-readable.
+
+13. Build recommendation engine: order/reduce/monitor
+Labels: recommendations, inventory
+Status sugerat: Done
+Acceptance criteria:
+- Recommendations include order, reduce and monitor.
+- Output includes recommended quantity and priority.
+- Output includes business explanation.
+
+14. Generate stockout and overstock alerts
+Labels: alerts, inventory
+Status sugerat: Done
+Acceptance criteria:
+- Alerts are generated for stockout risk and overstock.
+- Alerts are saved in data/processed/alerts.csv.
+- Alerts include priority, SKU, location and message.
+
+15. Build decision layer for dashboard
+Labels: decision-layer, integration
+Status sugerat: Done
+Acceptance criteria:
+- Decision layer outputs are generated in data/processed/decision_layer/.
+- Outputs include stock risk, scenarios, explainability and risk map.
+- Manifest contains row counts.
+
+16. Expose ML outputs through FastAPI endpoints
+Labels: integration, api
+Status sugerat: Done
+Acceptance criteria:
+- API exposes forecast, recommendations, alerts, KPIs and decision layer.
+- /health checks required files.
+- Backend/frontend can consume the endpoints.
+
+17. Create ML contract for backend/frontend
+Labels: docs, integration
+Status sugerat: Done
+Acceptance criteria:
+- ML_CONTRACT.md documents input and output schemas.
+- Important columns are described.
+- API usage examples are included.
+
+18. Create model card and project README
+Labels: docs
+Status sugerat: Done
+Acceptance criteria:
+- README documents setup, pipeline, API and integration.
+- MODEL_CARD.md documents model, metrics and limitations.
+- Documentation uses current metrics and dataset details.
+
+19. Add smoke tests for ML outputs and API handlers
+Labels: testing, ml
+Status sugerat: Done
+Acceptance criteria:
+- Tests validate forecast output contract.
+- Tests validate recommendations output contract.
+- Tests validate key API handlers.
+- Tests pass with unittest.
+
+20. Curate presentation-ready charts
+Labels: demo, docs
+Status sugerat: Done
+Acceptance criteria:
+- Weak diagnostic plots are removed from presentation outputs.
+- Recommended charts are documented.
+- Chart guide exists in PRESENTATION_CHART_GUIDE.md.
+
+21. Create demo scenario for winter stock risk
+Labels: demo
+Status sugerat: Done
+Acceptance criteria:
+- DEMO_SCENARIO.md describes one clear business story.
+- Scenario uses PEU-WF-WINTER-5L in FI_HEL.
+- Scenario includes forecast, recommendation and decision layer endpoints.
+
+
+Future / Backlog tasks
+======================
+
+22. Experiment with HistGradientBoostingRegressor as alternative model
+Labels: future, model, forecasting
+Status sugerat: Backlog
+Acceptance criteria:
+- Train HistGradientBoostingRegressor on the same feature set.
+- Compare against ExtraTrees and rolling baseline.
+- Save comparison metrics.
+
+23. Add quantile forecast P50/P90 for safety stock
+Labels: future, forecasting, inventory
+Status sugerat: Backlog
+Acceptance criteria:
+- Generate median and high-demand forecast.
+- Use P90 forecast for safety stock decision support.
+- Document interpretation for backend/frontend.
+
+24. Add run manifest for every pipeline execution
+Labels: future, mlops
+Status sugerat: Backlog
+Acceptance criteria:
+- Each pipeline run writes run_manifest.json.
+- Manifest includes timestamp, seed, dataset period, model name and key metrics.
+- Manifest lists generated files.
+
+25. Add model drift thresholds and monitoring alerts
+Labels: future, monitoring, mlops
+Status sugerat: Backlog
+Acceptance criteria:
+- Define drift thresholds for key features.
+- Add monitoring summary fields.
+- Document retraining triggers.
+
+26. Replace simulated weather with real weather API
+Labels: future, data-integration
+Status sugerat: Backlog
+Acceptance criteria:
+- Define weather API schema.
+- Map real weather fields to existing feature columns.
+- Add fallback for missing weather values.
+
+27. Validate model on real sales data when available
+Labels: future, evaluation
+Status sugerat: Backlog
+Acceptance criteria:
+- Replace synthetic sales with real anonymized sales.
+- Recompute metrics.
+- Compare synthetic vs real-data performance.
+
