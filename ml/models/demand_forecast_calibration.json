@@ -1,6 +1,6 @@
 {
   "model_scope": "global_model_with_sku_location_local_calibration",
-  "trained_at_utc": "2026-05-12T08:45:25Z",
+  "trained_at_utc": "2026-05-13T10:29:35Z",
   "calibration_start_date": "2025-10-03",
   "calibration_end_date": "2025-11-16",
   "validation_start_date": "2025-11-17",

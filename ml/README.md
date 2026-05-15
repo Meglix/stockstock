@@ -4,7 +4,6 @@ Modul ML pentru proiectul **Stock Optimizer Automotive**.
 
 Scopul modulului este sa produca predictii de cerere, segmentare SKU-location, recomandari de reaprovizionare si alerte operationale care pot fi consumate de backend si frontend. Repo-ul contine date sintetice, pipeline de training, modele salvate, output-uri CSV/JSON si un API FastAPI minimal pentru integrare.
 
-## Responsabilitate in echipa
 
 Acest repository acopera partea de **machine learning / data science**:
 
@@ -17,13 +16,6 @@ Acest repository acopera partea de **machine learning / data science**:
 - decision layer pentru dashboard: risc, explicatii, scenarii, monitoring;
 - endpoint-uri API/CSV-uri pe care backend-ul si frontend-ul le pot consuma.
 
-Nu acopera complet partea de produs final, care ramane pentru backend/frontend:
-
-- autentificare si roluri;
-- CRUD pentru produse/stoc/comenzi;
-- UI dashboard;
-- flux complet de creare comanda/proforma;
-- integrare reala cu furnizori, POS, ERP sau servicii meteo externe.
 
 ## Structura proiectului
 
@@ -40,6 +32,7 @@ stock_optimizer_ml_eu/
 |   |   |-- parts_master.csv
 |   |   |-- suppliers.csv
 |   |   |-- weather_daily.csv
+|   |   |-- weather_forecast_open_meteo.csv     # optional, forecast meteo live
 |   |   |-- calendar_daily.csv
 |   |   |-- calendar_events.csv
 |   |   |-- inventory_snapshot.csv
@@ -51,6 +44,7 @@ stock_optimizer_ml_eu/
 |       |-- alerts.csv
 |       |-- segments_kmeans.csv
 |       |-- model_metrics.json
+|       |-- forecast_16d.csv                    # optional, demo forecast cu Open-Meteo
 |       |-- business_alert_backtest_21d.json
 |       `-- decision_layer/
 |-- models/                      # modele joblib + metadata
@@ -60,7 +54,8 @@ stock_optimizer_ml_eu/
 |-- Makefile
 |-- MODEL_CARD.md
 |-- ML_CONTRACT.md
-`-- DEMO_SCENARIO.md
+|-- DEMO_SCENARIO.md
+`-- PRESENTATION_CHART_GUIDE.md
 ```
 
 ## Dataset
@@ -105,6 +100,53 @@ Datele includ:
 - fuel price si mobility index;
 - stoc curent, lead time, reorder point, safety stock;
 - furnizori si reliability score.
+
+### Open-Meteo live weather forecast
+
+Proiectul poate consuma forecast meteo real de la **Open-Meteo** pentru urmatoarele 1-16 zile. Pentru uz non-comercial Open-Meteo nu necesita API key.
+
+Comanda:
+
+```powershell
+$env:PYTHONPATH="."
+.\.venv\Scripts\python.exe scripts\fetch_open_meteo_weather.py --forecast-days 16
+```
+
+Output:
+
+```text
+data/raw/weather_forecast_open_meteo.csv
+data/raw/weather_forecast_open_meteo_metadata.json
+```
+
+Fisierul contine aceleasi feature-uri meteo folosite de model:
+
+- `temperature_c`
+- `rain_mm`
+- `snow_cm`
+- `temp_change_1d_c`
+- `temp_change_3d_c`
+- `cold_snap_flag`
+- `heatwave_flag`
+- `weather_spike_flag`
+- `temperature_drop_flag`
+- `temperature_rise_flag`
+- `weather_source`
+
+Cand `weather_forecast_open_meteo.csv` exista si datele se suprapun cu perioada de forecast, `run_forecast` foloseste automat Open-Meteo in locul vremii sintetice. Pentru restul zilelor ramane fallback-ul sintetic.
+
+Exemplu demo cu perioada live:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_forecast.py --horizon 16 --start-date 2026-05-13
+```
+
+Outputul rezultat este:
+
+```text
+data/processed/forecast_16d.csv
+data/processed/forecast_16d.json
+```
 
 ### Sezonalitate si semnale business
 
@@ -290,7 +332,8 @@ Tipuri de alerte generate:
 
 - `stockout_risk`
 - `overstock`
-- `weather_demand_spike`
+
+In decision layer, alertele pot include si semnale de tip `weather_demand_spike`, folosite pentru ranking de risc si explicabilitate.
 
 ## Decision layer
 
@@ -436,6 +479,14 @@ $env:PYTHONPATH="."
 .\.venv\Scripts\python.exe scripts\build_all.py
 ```
 
+Pentru weather live + forecast demo:
+
+```powershell
+$env:PYTHONPATH="."
+.\.venv\Scripts\python.exe scripts\fetch_open_meteo_weather.py --forecast-days 16
+.\.venv\Scripts\python.exe scripts\run_forecast.py --horizon 16 --start-date 2026-05-13
+```
+
 ## Endpoint-uri API
 
 ```text
@@ -444,6 +495,7 @@ GET  /model/metadata
 GET  /data/locations
 GET  /data/parts
 GET  /data/weather?location_id=FI_HEL&start_date=2025-09-01&end_date=2025-09-30
+GET  /data/open-meteo-weather?location_id=FI_HEL
 GET  /data/events?location_id=FI_HEL
 GET  /forecast/{sku}?location_id=FI_HEL&horizon=30
 GET  /forecast?sku=PEU-WF-WINTER-5L&location_id=FI_HEL
@@ -459,6 +511,10 @@ GET  /decision/map
 GET  /decision/explainability
 GET  /decision/model-monitoring
 GET  /decision/integrations
+GET  /dashboard/location-risk?location_id=FI_HEL
+GET  /dashboard/forecast-weather?sku=PEU-WF-WINTER-5L&location_id=FI_HEL&horizon=16
+GET  /dashboard/alerts-orders?location_id=FI_HEL&priority=high
+GET  /dashboard/location?location_id=FI_HEL&sku=PEU-WF-WINTER-5L&horizon=16
 POST /decision/build
 POST /refresh-outputs
 POST /retrain
@@ -482,6 +538,19 @@ Pentru MVP, backend-ul poate expune catre frontend urmatoarele ecrane bazate pe 
 - pagina locatie/risc din `/decision/map`;
 - explicatii decizie din `/decision/explainability`.
 
+Pentru un dashboard full stack, frontend-ul poate consuma direct endpoint-urile agregate:
+
+- `GET /dashboard/location-risk` pentru zona **Location Risk Overview**;
+- `GET /dashboard/forecast-weather` pentru zona **Forecast + Weather**;
+- `GET /dashboard/alerts-orders` pentru zona **Alerts & Recommended Orders**;
+- `GET /dashboard/location` pentru toate cele 3 zone intr-un singur payload.
+
+Exemplu pentru pagina completa pe o locatie:
+
+```text
+GET /dashboard/location?location_id=FI_HEL&sku=PEU-WF-WINTER-5L&horizon=16
+```
+
 ## Limitari
 
 - Datasetul este sintetic si nu reprezinta date reale Peugeot.
@@ -494,12 +563,4 @@ Pentru MVP, backend-ul poate expune catre frontend urmatoarele ecrane bazate pe 
 
 Scenariul detaliat este in `DEMO_SCENARIO.md`.
 
-Pentru o prezentare scurta:
 
-1. Porneste API-ul si deschide Swagger la `http://localhost:8000/docs`.
-2. Arata `/health` pentru fisiere disponibile.
-3. Arata `/forecast/PEU-WF-WINTER-5L?location_id=FI_HEL&horizon=30`.
-4. Arata `/recommendations?action=order&priority=high`.
-5. Arata `/decision/stock-risk`.
-6. Arata `/decision/explainability`.
-7. Mentioneaza ca backend/frontend folosesc aceste output-uri pentru dashboard, stoc si fluxul de comenzi.

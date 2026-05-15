@@ -1,6 +1,6 @@
 {
   "model_name": "KMeans_SKU_location_segmentation",
-  "trained_at_utc": "2026-05-12T08:45:32Z",
+  "trained_at_utc": "2026-05-13T10:29:54Z",
   "n_clusters": 6,
   "features": [
     "avg_daily_demand",

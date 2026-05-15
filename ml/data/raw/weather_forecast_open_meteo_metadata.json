@@ -1,0 +1,14 @@
+{
+  "generated_at_utc": "2026-05-13T15:01:14Z",
+  "provider": "Open-Meteo",
+  "provider_url": "https://open-meteo.com/",
+  "license_note": "Open-Meteo offers free access for non-commercial use; no API key is required.",
+  "forecast_days_requested": 16,
+  "locations_requested": 12,
+  "locations_successful": 12,
+  "rows": 192,
+  "date_min": "2026-05-13",
+  "date_max": "2026-05-28",
+  "output_file": "C:\\Users\\rvanca\\OneDrive - ENDAVA\\Desktop\\stock_optimizer_ml_eu\\data\\raw\\weather_forecast_open_meteo.csv",
+  "errors": []
+}

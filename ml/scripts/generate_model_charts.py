@@ -97,26 +97,6 @@ def chart_holdout_predictions():
     plt.ylabel("Predicted quantity sold")
     savefig("02_holdout_actual_vs_predicted.png")
 
-    errors = df["prediction"] - df["quantity_sold"]
-    plt.figure(figsize=(8, 5))
-    plt.hist(errors, bins=40)
-    plt.axvline(0, linestyle="--")
-    plt.title("Prediction error distribution")
-    plt.xlabel("Prediction error = predicted - actual")
-    plt.ylabel("Count")
-    savefig("03_prediction_error_distribution.png")
-
-    if "category" in df.columns:
-        err = df.assign(abs_error=(df["prediction"] - df["quantity_sold"]).abs())
-        by_cat = err.groupby("category", as_index=False)["abs_error"].mean().sort_values("abs_error", ascending=False)
-        plt.figure(figsize=(10, 5))
-        plt.bar(by_cat["category"], by_cat["abs_error"])
-        plt.title("Mean absolute error by product category")
-        plt.xlabel("Category")
-        plt.ylabel("MAE")
-        plt.xticks(rotation=45, ha="right")
-        savefig("04_mae_by_category.png")
-
 
 def chart_segments():
     path = DATA_PROCESSED / "segments_kmeans.csv"

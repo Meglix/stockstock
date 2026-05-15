@@ -1,6 +1,6 @@
 {
   "model_scope": "two_stage_intermittent_demand_guard",
-  "trained_at_utc": "2026-05-12T08:45:25Z",
+  "trained_at_utc": "2026-05-13T10:29:35Z",
   "policy": {
     "by_pair": {},
     "by_category": {}

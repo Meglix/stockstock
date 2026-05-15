@@ -1,4 +1,4 @@
-.PHONY: install data train cluster forecast recommend decision build-all api docker-build docker-up
+.PHONY: install data train cluster forecast weather-live recommend decision build-all api docker-build docker-up
 
 install:
 	python -m pip install -r requirements.txt
@@ -14,6 +14,9 @@ cluster:
 
 forecast:
 	PYTHONPATH=. python scripts/run_forecast.py
+
+weather-live:
+	PYTHONPATH=. python scripts/fetch_open_meteo_weather.py
 
 recommend:
 	PYTHONPATH=. python scripts/generate_recommendations.py
