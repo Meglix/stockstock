@@ -18,6 +18,7 @@ import {
   forecastLocations,
   forecastParts,
   forecastSourceLabel,
+  getForecastComparisonWindow,
   getForecastCategories,
   getForecastSeries,
 } from "../data/forecasting";
@@ -58,6 +59,7 @@ export function Forecasting() {
   const displayCategory = forecastCategoryLabel(category);
   const sourceLabel = forecastResponse ? forecastSourceLabel(forecastResponse) : "Local fallback";
   const chartTitle = `Demand forecast for ${displayCategory} in ${selectedLocation.city} - next ${horizon} days`;
+  const comparisonWindow = useMemo(() => getForecastComparisonWindow(points), [points]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -154,6 +156,16 @@ export function Forecasting() {
             <span className="panel-pill"><PackageSearch size={13} /> {displayCategory}</span>
             <span className="panel-pill">{selectedPart.name}</span>
             <span className="panel-pill"><CalendarDays size={13} /> {horizon} days</span>
+          </div>
+          <div className="mb-4 rounded-xl border border-white/[0.07] bg-white/[0.025] px-4 py-3 text-sm leading-6 text-slate-400">
+            The chart uses a normalized demo timeline: recent actual demand is shown as D-6 to D0, then the selected forecast horizon continues as D+1 to D+{horizon}.{" "}
+            {comparisonWindow.hasHandoff ? (
+              <span>
+                Source dates: actual {comparisonWindow.actualRange || "available history"}; forecast {comparisonWindow.forecastRange || `${horizon} days`}.
+              </span>
+            ) : (
+              <span>Only forecast points are available for this selection, so the chart shows the forecast window without an actual handoff.</span>
+            )}
           </div>
           <div className="forecast-control-grid mb-5">
             <label className="form-field">

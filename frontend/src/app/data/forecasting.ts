@@ -523,3 +523,25 @@ export async function fetchWeatherImpact(query: ForecastQuery, signal?: AbortSig
 export function displayPointDate(point: ForecastPoint) {
   return formatShortDate(point.date) || point.label;
 }
+
+function formatDateRange(points: ForecastPoint[]) {
+  const dates = points.map((point) => validDate(point.date)).filter((date): date is string => Boolean(date));
+  if (!dates.length) return "";
+  const sorted = dates.sort((left, right) => left.localeCompare(right));
+  const start = formatShortDate(sorted[0]);
+  const end = formatShortDate(sorted[sorted.length - 1]);
+  return start === end ? start : `${start} - ${end}`;
+}
+
+export function getForecastComparisonWindow(points: ForecastPoint[]) {
+  const actualPoints = points.filter((point) => typeof point.actual === "number");
+  const forecastPoints = points.filter((point) => typeof point.forecast === "number");
+
+  return {
+    actualDays: actualPoints.length,
+    forecastDays: forecastPoints.length,
+    actualRange: formatDateRange(actualPoints),
+    forecastRange: formatDateRange(forecastPoints),
+    hasHandoff: actualPoints.length > 0 && forecastPoints.length > 0,
+  };
+}

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 from datetime import date, timedelta
+import json
 import math
 import os
 from pathlib import Path
@@ -15,6 +16,7 @@ DEFAULT_ML_TIMEOUT_SECONDS = float(os.getenv("ML_SERVICE_TIMEOUT_SECONDS", "5"))
 REPO_ROOT = Path(__file__).resolve().parents[5]
 BACKEND_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_ML_PROCESSED_DATA_DIR = REPO_ROOT / "ml" / "data" / "processed"
+DEFAULT_ML_RAW_DATA_DIR = REPO_ROOT / "ml" / "data" / "raw"
 
 MOCK_PARTS = {
     "PEU-WF-WINTER-5L": ("Lichid parbriz iarna -20C 5L", "Winter Fluids", 42.0),
@@ -124,6 +126,17 @@ def ml_processed_data_dir() -> Path:
     return (BACKEND_ROOT / path).resolve()
 
 
+def ml_raw_data_dir() -> Path:
+    configured_path = os.getenv("ML_RAW_DATA_DIR")
+    if not configured_path:
+        return DEFAULT_ML_RAW_DATA_DIR
+
+    path = Path(configured_path)
+    if path.is_absolute():
+        return path
+    return (BACKEND_ROOT / path).resolve()
+
+
 def _numeric(value: Any, default: float = 0.0) -> float:
     try:
         number = float(value)
@@ -213,6 +226,102 @@ def read_forecast_csv(
     if not items:
         return [], "Forecast CSV contained no rows for the requested filters"
     return items, None
+
+
+def _read_csv_rows(path: Path) -> tuple[list[dict[str, Any]], str | None]:
+    if not path.exists():
+        return [], f"CSV not found at {path}"
+
+    try:
+        with path.open("r", encoding="utf-8", newline="") as file:
+            return list(csv.DictReader(file)), None
+    except OSError as error:
+        return [], str(error)
+
+
+def read_sales_history_csv(
+    *,
+    sku: str | None,
+    location_id: str | None,
+    start_date: str | None,
+    end_date: str | None,
+    limit: int,
+) -> tuple[list[dict[str, Any]], str | None]:
+    rows, error = _read_csv_rows(ml_raw_data_dir() / "sales_history.csv")
+    if error:
+        return [], error
+
+    sku_filter = sku.strip().upper() if sku else None
+    location_filter = location_id.strip().upper() if location_id else None
+    filtered: list[dict[str, Any]] = []
+
+    for row in rows:
+        row_sku = str(row.get("sku") or "").upper()
+        row_location = str(row.get("location_id") or "").upper()
+        row_date = str(row.get("date") or "")
+        if sku_filter and row_sku != sku_filter:
+            continue
+        if location_filter and row_location != location_filter:
+            continue
+        if start_date and row_date < start_date:
+            continue
+        if end_date and row_date > end_date:
+            continue
+        filtered.append(row)
+
+    filtered.sort(key=lambda item: str(item.get("date") or ""))
+    if not start_date and not end_date:
+        filtered = filtered[-limit:]
+    else:
+        filtered = filtered[:limit]
+
+    if not filtered:
+        return [], "Sales history CSV contained no rows for the requested filters"
+    return filtered, None
+
+
+def read_open_meteo_csv(
+    *,
+    location_id: str | None,
+    start_date: str | None,
+    end_date: str | None,
+    limit: int,
+) -> tuple[list[dict[str, Any]], str | None]:
+    rows, error = _read_csv_rows(ml_raw_data_dir() / "weather_forecast_open_meteo.csv")
+    if error:
+        return [], error
+
+    location_filter = location_id.strip().upper() if location_id else None
+    filtered: list[dict[str, Any]] = []
+
+    for row in rows:
+        row_location = str(row.get("location_id") or "").upper()
+        row_date = str(row.get("date") or "")
+        if location_filter and row_location != location_filter:
+            continue
+        if start_date and row_date < start_date:
+            continue
+        if end_date and row_date > end_date:
+            continue
+        filtered.append(row)
+
+    filtered.sort(key=lambda item: str(item.get("date") or ""))
+    filtered = filtered[:limit]
+
+    if not filtered:
+        return [], "Open-Meteo CSV contained no rows for the requested filters"
+    return filtered, None
+
+
+def read_open_meteo_metadata() -> tuple[dict[str, Any], str | None]:
+    path = ml_raw_data_dir() / "weather_forecast_open_meteo_metadata.json"
+    if not path.exists():
+        return {}, f"Metadata not found at {path}"
+
+    try:
+        return json.loads(path.read_text(encoding="utf-8")), None
+    except (OSError, ValueError) as error:
+        return {}, str(error)
 
 
 def build_mock_forecast_rows(

@@ -4,7 +4,13 @@ from typing import Any
 
 from fastapi import APIRouter, Body, Query
 
-from app.analytics.services.ml_client import safe_ml_service_get, safe_ml_service_post
+from app.analytics.services.ml_client import (
+    read_open_meteo_csv,
+    read_open_meteo_metadata,
+    read_sales_history_csv,
+    safe_ml_service_get,
+    safe_ml_service_post,
+)
 
 
 router = APIRouter(prefix="/ml", tags=["ml"])
@@ -92,16 +98,40 @@ def ml_sales_history(
     end_date: str | None = Query(None, min_length=1),
     limit: int = Query(1000, ge=1, le=50000),
 ):
-    return _get(
-        "/data/sales-history",
-        _params(
-            sku=sku,
-            location_id=location,
-            start_date=start_date,
-            end_date=end_date,
-            limit=limit,
-        ),
+    params = _params(
+        sku=sku,
+        location_id=location,
+        start_date=start_date,
+        end_date=end_date,
+        limit=limit,
     )
+    data, error = safe_ml_service_get("/data/sales-history", params)
+    if error is None:
+        return _result(data, error)
+
+    csv_items, csv_error = read_sales_history_csv(
+        sku=sku,
+        location_id=location,
+        start_date=start_date,
+        end_date=end_date,
+        limit=limit,
+    )
+    if csv_items:
+        return {
+            "available": True,
+            "source": "ml-csv-fallback",
+            "data": {},
+            "items": csv_items,
+            "error": f"ML service unavailable: {error}",
+        }
+
+    return {
+        "available": False,
+        "source": "ml-csv-fallback",
+        "data": {},
+        "items": [],
+        "error": csv_error or error,
+    }
 
 
 @router.get("/weather/live")
@@ -112,21 +142,64 @@ def ml_live_weather(
     limit: int = Query(1000, ge=1, le=20000),
     refresh: bool = False,
 ):
-    return _get(
-        "/weather/open-meteo",
-        _params(
-            location_id=location,
-            start_date=start_date,
-            end_date=end_date,
-            limit=limit,
-            refresh=refresh,
-        ),
+    params = _params(
+        location_id=location,
+        start_date=start_date,
+        end_date=end_date,
+        limit=limit,
+        refresh=refresh,
     )
+    data, error = safe_ml_service_get("/weather/open-meteo", params)
+    if error is None:
+        return _result(data, error)
+
+    csv_items, csv_error = read_open_meteo_csv(
+        location_id=location,
+        start_date=start_date,
+        end_date=end_date,
+        limit=limit,
+    )
+    if csv_items:
+        return {
+            "available": True,
+            "source": "open-meteo-csv-fallback",
+            "data": {},
+            "items": csv_items,
+            "error": f"ML service unavailable: {error}",
+        }
+
+    return {
+        "available": False,
+        "source": "open-meteo-csv-fallback",
+        "data": {},
+        "items": [],
+        "error": csv_error or error,
+    }
 
 
 @router.get("/weather/live/metadata")
 def ml_live_weather_metadata():
-    return _get("/weather/open-meteo/metadata")
+    data, error = safe_ml_service_get("/weather/open-meteo/metadata")
+    if error is None:
+        return _result(data, error)
+
+    metadata, metadata_error = read_open_meteo_metadata()
+    if metadata:
+        return {
+            "available": True,
+            "source": "open-meteo-csv-fallback",
+            "data": metadata,
+            "items": [],
+            "error": f"ML service unavailable: {error}",
+        }
+
+    return {
+        "available": False,
+        "source": "open-meteo-csv-fallback",
+        "data": {},
+        "items": [],
+        "error": metadata_error or error,
+    }
 
 
 @router.get("/forecast")

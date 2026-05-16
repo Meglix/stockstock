@@ -24,7 +24,7 @@ function makePath(points: Array<{ x: number; y: number }>) {
 }
 
 function makeBandPath(top: Array<{ x: number; y: number }>, bottom: Array<{ x: number; y: number }>) {
-  if (!top.length || !bottom.length) return "";
+  if (top.length < 2 || bottom.length < 2) return "";
   return `${makePath(top)} L ${bottom
     .slice()
     .reverse()
@@ -79,6 +79,17 @@ export function DemandForecastChart({
   );
   const yTicks = [0.25, 0.5, 0.75, 1].map((ratio) => Math.round(max * ratio));
   const hasForecastLine = forecastPoints.length >= 2;
+  const actualPoints = mapped.filter((point) => typeof point.actualY === "number");
+  const lastActualPoint = actualPoints[actualPoints.length - 1];
+  const firstForecastPoint = forecastPoints[0];
+  const handoffX = lastActualPoint && firstForecastPoint ? (lastActualPoint.x + firstForecastPoint.x) / 2 : firstForecastPoint?.x;
+  const handoffPath =
+    lastActualPoint && firstForecastPoint
+      ? makePath([
+          { x: lastActualPoint.x, y: lastActualPoint.actualY ?? 0 },
+          { x: firstForecastPoint.x, y: firstForecastPoint.forecastY ?? 0 },
+        ])
+      : "";
 
   return (
     <div className="relative">
@@ -111,6 +122,15 @@ export function DemandForecastChart({
             </linearGradient>
           </defs>
           <rect width={chart.width} height={chart.height} fill="rgba(255,255,255,0.014)" />
+          {handoffX ? (
+            <>
+              <rect x={handoffX} y={chart.top} width={chart.width - chart.right - handoffX} height={innerHeight} fill="rgba(251,146,60,0.035)" />
+              <line x1={handoffX} x2={handoffX} y1={chart.top} y2={chart.height - chart.bottom} stroke="rgba(251,146,60,0.24)" strokeDasharray="5 6" />
+              <text x={handoffX + 8} y={chart.top + 16} fill="#fb923c" fontSize="11" fontWeight="700">
+                Forecast starts
+              </text>
+            </>
+          ) : null}
 
           {yTicks.map((tick) => {
             const y = chart.top + innerHeight - (tick / max) * innerHeight;
@@ -138,35 +158,55 @@ export function DemandForecastChart({
             );
           })}
 
-          <motion.path
-            d={confidencePath}
-            fill="url(#forecastBand)"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.55 }}
-          />
-          <motion.path
-            d={forecastPath}
-            fill="none"
-            stroke="url(#forecastStroke)"
-            strokeWidth="2.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 0.95 }}
-            transition={{ duration: 0.85 }}
-          />
-          <motion.path
-            d={actualPath}
-            fill="none"
-            stroke="#7dd3fc"
-            strokeWidth="2.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 0.9 }}
-            transition={{ duration: 0.75, delay: 0.08 }}
-          />
+          {confidencePath ? (
+            <motion.path
+              d={confidencePath}
+              fill="url(#forecastBand)"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.55 }}
+            />
+          ) : null}
+          {handoffPath ? (
+            <motion.path
+              d={handoffPath}
+              fill="none"
+              stroke="rgba(226,232,240,0.72)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray="4 6"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.78 }}
+              transition={{ duration: 0.55, delay: 0.04 }}
+            />
+          ) : null}
+          {forecastPath ? (
+            <motion.path
+              d={forecastPath}
+              fill="none"
+              stroke="url(#forecastStroke)"
+              strokeWidth="2.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.95 }}
+              transition={{ duration: 0.85 }}
+            />
+          ) : null}
+          {actualPath ? (
+            <motion.path
+              d={actualPath}
+              fill="none"
+              stroke="#7dd3fc"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.9 }}
+              transition={{ duration: 0.75, delay: 0.08 }}
+            />
+          ) : null}
 
           {mapped.map((point, index) => (
             <g key={`hit-${point.date ?? point.label}-${index}`}>
@@ -232,6 +272,12 @@ export function DemandForecastChart({
           <span className="h-2 w-5 rounded-full bg-orange-300/25" />
           Confidence band
         </span>
+        {handoffPath ? (
+          <span className="inline-flex items-center gap-2">
+            <span className="h-0.5 w-5 border-t border-dashed border-slate-300/70" />
+            Actual-to-forecast handoff
+          </span>
+        ) : null}
       </div>
     </div>
   );
