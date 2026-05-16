@@ -93,3 +93,54 @@ def test_dashboard_ml_recommendations_falls_back_safely_when_unavailable(client,
     assert body["location_id"] == "ES_MAD"
     assert body["items"] == []
     assert body["error"] == "connection failed"
+
+
+def test_order_notifications_route_to_matching_tabs_and_groups(client):
+    import app.db as db_module
+
+    connection = sqlite3.connect(db_module.DATABASE_PATH)
+    now = "2026-05-16T10:00:00"
+    cursor = connection.cursor()
+    cursor.execute(
+        """
+        INSERT INTO order_clients (
+            id, client_name, user_id, location, requested_time, status,
+            fulfillment_status, stock_applied, shortage_quantity, created_at, updated_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        ("CL-TEST", "Route Test Client", None, "Bucharest", "12:00", "Pending", "unreviewed", 0, 0, now, now),
+    )
+    cursor.execute(
+        """
+        INSERT INTO order_client_lines (order_id, part_id, sku, part_name, quantity, unit_price)
+        VALUES (?, ?, ?, ?, ?, ?)
+        """,
+        ("CL-TEST", 1, "PART-001", "Test Part", 2, 100.0),
+    )
+    cursor.execute(
+        """
+        INSERT INTO order_suppliers (
+            id, supplier_id, supplier_name, user_id, location, status,
+            estimated_arrival, stock_applied, created_at, updated_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        ("SO-TEST", "SUP-TEST", "Test Supplier", None, "Bucharest", "Delivered", now, 0, now, now),
+    )
+    cursor.execute(
+        """
+        INSERT INTO order_supplier_lines (order_id, part_id, sku, part_name, quantity, unit_price)
+        VALUES (?, ?, ?, ?, ?, ?)
+        """,
+        ("SO-TEST", 1, "PART-001", "Test Part", 5, 100.0),
+    )
+    connection.commit()
+    connection.close()
+
+    response = client.get("/notifications")
+
+    assert response.status_code == 200
+    notifications = {item["id"]: item for item in response.json()}
+    assert notifications["WF-CLIENT-CL-TEST"]["route"] == "/dashboard/orders?tab=clients&group=needs-review"
+    assert notifications["WF-SUPPLIER-SO-TEST"]["route"] == "/dashboard/orders?tab=suppliers&group=needs-review"

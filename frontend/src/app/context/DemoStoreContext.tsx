@@ -13,6 +13,7 @@ import {
   SupplierOrder,
   deriveProductStatus,
   deriveStockStatus,
+  recommendedDefaultForCategory,
 } from "../data/inventory";
 
 export type DemoNotificationType = "client-order" | "supplier-delivery" | "backorder" | "market";
@@ -424,7 +425,10 @@ function isStockStatus(value: unknown): value is StockHealth {
 function normalizeCatalogProduct(item: BackendCatalogProduct): CatalogProduct {
   const id = String(item.productId ?? item.product_id ?? item.part_id ?? item.id);
   const stock = numericValue(item.stock ?? item.current_stock, 0);
-  const recommended = Math.max(numericValue(item.recommended ?? item.optimal_stock ?? item.reorder_point, Math.max(stock, 1)), 1);
+  const category = item.category ?? item.raw_category ?? "Uncategorized";
+  const categoryDefault = recommendedDefaultForCategory(category);
+  const rawRecommended = item.recommended ?? item.optimal_stock ?? item.reorder_point;
+  const recommended = rawRecommended == null ? categoryDefault : Math.max(numericValue(rawRecommended, categoryDefault), 1);
   const reorderPoint = numericValue(item.reorder_point, 0);
   const availability: CatalogProduct["availability"] =
     item.availability === "available" || item.availability === "order-only" ? item.availability : stock > 0 ? "available" : "order-only";
@@ -433,7 +437,7 @@ function normalizeCatalogProduct(item: BackendCatalogProduct): CatalogProduct {
     id,
     name: item.name ?? item.part_name,
     sku: item.sku,
-    category: item.category ?? item.raw_category ?? "Uncategorized",
+    category,
     supplier: item.supplier ?? item.supplier_id ?? "Unknown Supplier",
     supplierId: item.supplier_id ?? undefined,
     location: item.location ?? item.display_location ?? undefined,
@@ -450,7 +454,9 @@ function normalizeCatalogProduct(item: BackendCatalogProduct): CatalogProduct {
 function normalizeBackendStockItem(row: BackendStock): StockItem {
   const productId = String(row.productId ?? row.product_id ?? row.part_id);
   const current = numericValue(row.current ?? row.current_stock, 0);
-  const recommended = Math.max(numericValue(row.recommended ?? row.optimal_stock ?? row.reorderPoint ?? row.reorder_point, Math.max(current, 1)), 1);
+  const category = row.category ?? row.raw_category ?? "Uncategorized";
+  const rawRecommended = row.recommended ?? row.optimal_stock ?? row.reorderPoint ?? row.reorder_point;
+  const recommended = rawRecommended == null ? recommendedDefaultForCategory(category) : Math.max(numericValue(rawRecommended, recommendedDefaultForCategory(category)), 1);
   const reorderPoint = numericValue(row.reorderPoint ?? row.reorder_point, 0);
   const location = row.location_id ?? row.location ?? row.city ?? "My Store";
 
@@ -459,7 +465,7 @@ function normalizeBackendStockItem(row: BackendStock): StockItem {
     productId,
     name: row.name ?? row.part_name ?? row.sku ?? "Unknown part",
     sku: row.sku ?? "",
-    category: row.category ?? row.raw_category ?? "Uncategorized",
+    category,
     supplier: row.supplier ?? row.supplier_id ?? "Unknown Supplier",
     current,
     recommended,

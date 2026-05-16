@@ -1036,6 +1036,14 @@
     align-items: start;
   }
 
+  .order-history-row {
+    min-height: 8.75rem;
+  }
+
+  .client-order-card {
+    min-height: 10.75rem;
+  }
+
   .quantity-input,
   .time-input {
     min-height: 2.5rem;

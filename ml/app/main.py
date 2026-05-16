@@ -46,6 +46,24 @@ def _filter_common(df: pd.DataFrame, sku: Optional[str] = None, location_id: Opt
     return result.head(limit)
 
 
+def _read_forecast_for_horizon(horizon: int) -> pd.DataFrame:
+    exact_path = DATA_PROCESSED_DIR / f"forecast_{horizon}d.csv"
+    if exact_path.exists():
+        return _read_csv(exact_path)
+
+    default_path = DATA_PROCESSED_DIR / f"forecast_{DEFAULT_FORECAST_HORIZON}d.csv"
+    if horizon <= DEFAULT_FORECAST_HORIZON and default_path.exists():
+        df = _read_csv(default_path)
+        if "horizon_day" in df.columns:
+            horizon_days = pd.to_numeric(df["horizon_day"], errors="coerce")
+            df = df[horizon_days <= horizon]
+        elif "forecast_date" in df.columns:
+            df = df.sort_values("forecast_date").groupby(["sku", "location_id"], as_index=False).head(horizon)
+        return df
+
+    raise HTTPException(status_code=404, detail=f"Fisier lipsa: {exact_path.name}")
+
+
 @app.get("/health")
 def health():
     required = {
@@ -100,6 +118,28 @@ def weather(
     return _records(df.head(limit))
 
 
+@app.get("/data/sales-history")
+def sales_history(
+    sku: Optional[str] = None,
+    location_id: Optional[str] = None,
+    start_date: Optional[str] = None,
+    end_date: Optional[str] = None,
+    limit: int = Query(1000, le=50000),
+):
+    df = _read_csv(DATA_RAW_DIR / "sales_history.csv")
+    if sku:
+        df = df[df["sku"].astype(str).str.upper() == sku.upper()]
+    if location_id:
+        df = df[df["location_id"].astype(str).str.upper() == location_id.upper()]
+    if start_date:
+        df = df[df["date"] >= start_date]
+    if end_date:
+        df = df[df["date"] <= end_date]
+    df = df.sort_values("date")
+    limited = df.head(limit) if start_date or end_date else df.tail(limit)
+    return _records(limited.sort_values("date"))
+
+
 @app.get("/data/events")
 def events(
     location_id: Optional[str] = None,
@@ -117,6 +157,32 @@ def events(
     return _records(df.head(limit))
 
 
+@app.get("/weather/open-meteo")
+def open_meteo_weather(
+    location_id: Optional[str] = None,
+    start_date: Optional[str] = None,
+    end_date: Optional[str] = None,
+    limit: int = Query(1000, le=20000),
+    refresh: bool = False,
+):
+    df = _read_csv(DATA_RAW_DIR / "weather_forecast_open_meteo.csv")
+    if location_id:
+        df = df[df["location_id"].astype(str).str.upper() == location_id.upper()]
+    if start_date:
+        df = df[df["date"] >= start_date]
+    if end_date:
+        df = df[df["date"] <= end_date]
+    return _records(df.sort_values("date").head(limit))
+
+
+@app.get("/weather/open-meteo/metadata")
+def open_meteo_weather_metadata():
+    path = DATA_RAW_DIR / "weather_forecast_open_meteo_metadata.json"
+    if not path.exists():
+        return {"available": False}
+    return {"available": True, **json.loads(path.read_text(encoding="utf-8"))}
+
+
 @app.get("/forecast")
 def forecast(
     sku: Optional[str] = None,
@@ -124,7 +190,7 @@ def forecast(
     horizon: int = DEFAULT_FORECAST_HORIZON,
     limit: int = Query(1000, le=20000),
 ):
-    df = _read_csv(DATA_PROCESSED_DIR / f"forecast_{horizon}d.csv")
+    df = _read_forecast_for_horizon(horizon)
     return _records(_filter_common(df, sku=sku, location_id=location_id, limit=limit))
 
 
@@ -135,7 +201,7 @@ def forecast_for_sku(
     horizon: int = DEFAULT_FORECAST_HORIZON,
     limit: int = Query(1000, le=20000),
 ):
-    df = _read_csv(DATA_PROCESSED_DIR / f"forecast_{horizon}d.csv")
+    df = _read_forecast_for_horizon(horizon)
     return _records(_filter_common(df, sku=sku, location_id=location_id, limit=limit))
 
 

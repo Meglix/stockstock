@@ -6,7 +6,7 @@ import { Edit3, Plus, Search, Trash2, X } from "lucide-react";
 import { DataPanel } from "../components/DataPanel";
 import { StatusBadge } from "../components/StatusBadge";
 import { useDemoStore } from "../context/DemoStoreContext";
-import { StockHealth, StockItem, deriveStockStatus, stockStatusDescription } from "../data/inventory";
+import { CatalogProduct, StockHealth, StockItem, deriveStockStatus, recommendedDefaultForCategory, stockStatusDescription } from "../data/inventory";
 import { readCurrentUserLocation } from "../utils/userLocation";
 
 type StockFormState = {
@@ -64,15 +64,17 @@ function isIntegerText(value: string, { allowZero = true } = {}) {
   return Number.isInteger(numericValue) && (allowZero ? numericValue >= 0 : numericValue > 0);
 }
 
-function integerInput(value: string) {
-  return value.replace(/\D/g, "");
+function catalogRecommendedQuantity(product: CatalogProduct) {
+  if (typeof product.recommended === "number" && Number.isInteger(product.recommended) && product.recommended > 0) return product.recommended;
+  return recommendedDefaultForCategory(product.category);
 }
 
-function ReadOnlyField({ label, value }: { label: string; value: string }) {
+function ReadOnlyField({ label, value, error }: { label: string; value: string; error?: string }) {
   return (
     <div className="form-field">
       <span>{label}</span>
-      <div className="readonly-field">{value || "Not selected"}</div>
+      <div className={`readonly-field ${error ? "input-error" : ""}`}>{value || "Not selected"}</div>
+      {error ? <small>{error}</small> : null}
     </div>
   );
 }
@@ -122,6 +124,8 @@ export function StockManagement() {
       setForm((current) => ({ ...createEmptyForm(defaultStoreLocation), current: current.current, productId }));
       return;
     }
+    const recommended = catalogRecommendedQuantity(product);
+    const reorderPoint = product.reorderPoint ?? Math.max(0, Math.round(recommended * 0.42));
     setForm((current) => ({
       ...current,
       productId: product.id,
@@ -129,9 +133,9 @@ export function StockManagement() {
       sku: product.sku,
       category: product.category,
       supplier: product.supplier,
-      recommended: String(product.recommended ?? Math.max(product.stock, 1)),
-      reorderPoint: String(product.reorderPoint ?? 0),
-      status: deriveStockStatus(Number(current.current || 0), product.recommended ?? Math.max(product.stock, 1), product.reorderPoint ?? 0),
+      recommended: String(recommended),
+      reorderPoint: String(reorderPoint),
+      status: deriveStockStatus(Number(current.current || 0), recommended, reorderPoint),
       location: current.location || product.location || defaultStoreLocation,
     }));
   };
@@ -285,9 +289,9 @@ export function StockManagement() {
                 <ReadOnlyField label="SKU" value={form.sku} />
                 <ReadOnlyField label="Category" value={form.category} />
                 <ReadOnlyField label="Supplier" value={form.supplier} />
-                <label className="form-field"><span>Current quantity</span><div className={`input-shell ${errors.current ? "input-error" : ""}`}><input value={form.current} onChange={(event) => update("current", integerInput(event.target.value))} inputMode="numeric" pattern="[0-9]*" /></div>{errors.current ? <small>{errors.current}</small> : null}</label>
-                <ReadOnlyField label="Recommended quantity" value={form.recommended} />
-                <ReadOnlyField label="Reorder point" value={form.reorderPoint} />
+                <label className="form-field"><span>Current quantity</span><div className={`input-shell ${errors.current ? "input-error" : ""}`}><input value={form.current} onChange={(event) => update("current", event.target.value)} inputMode="numeric" pattern="[0-9]*" /></div>{errors.current ? <small>{errors.current}</small> : null}</label>
+                <ReadOnlyField label="Recommended quantity" value={form.recommended} error={errors.recommended} />
+                <ReadOnlyField label="Reorder point" value={form.reorderPoint} error={errors.reorderPoint} />
                 <div className="form-field">
                   <span>Status</span>
                   <div className="readonly-field">

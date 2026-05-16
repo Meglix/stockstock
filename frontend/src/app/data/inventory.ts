@@ -123,6 +123,30 @@ export function stockTarget(optimalStock: number, reorderPoint = 0) {
   return Math.max(optimalStock, reorderPoint, 1);
 }
 
+const categoryRecommendedDefaults: Record<string, number> = {
+  tires: 35,
+  battery: 20,
+  batteries: 20,
+  brakes: 25,
+  filters: 30,
+  wipers: 20,
+  fluids: 40,
+  "winter fluids": 40,
+  winter_fluids: 40,
+  coolant: 40,
+  lighting: 15,
+  maintenance: 25,
+  accessories: 20,
+  "ac cooling": 20,
+  ac_cooling: 20,
+  "air conditioning": 20,
+};
+
+export function recommendedDefaultForCategory(category: string | undefined | null) {
+  const normalized = (category ?? "").trim().toLowerCase().replace(/-/g, " ");
+  return categoryRecommendedDefaults[normalized] ?? categoryRecommendedDefaults[normalized.replace(/\s+/g, "_")] ?? 20;
+}
+
 export function deriveStockStatus(current: number, optimalStock: number, reorderPoint = 0): StockHealth {
   const target = stockTarget(optimalStock, reorderPoint);
   const coverage = current / target;

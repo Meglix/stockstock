@@ -24,7 +24,7 @@ class StockCreatePayload(BaseModel):
     safety_stock: int = Field(default=0, ge=0, le=1000)
     optimal_stock: int | None = Field(
         default=None,
-        ge=0,
+        ge=1,
         le=1000,
         validation_alias=AliasChoices("optimal_stock", "recommended", "recommended_stock"),
     )
@@ -73,7 +73,7 @@ class StockUpdatePayload(BaseModel):
     safety_stock: int | None = Field(default=None, ge=0, le=1000)
     optimal_stock: int | None = Field(
         default=None,
-        ge=0,
+        ge=1,
         le=1000,
         validation_alias=AliasChoices("optimal_stock", "recommended", "recommended_stock"),
     )

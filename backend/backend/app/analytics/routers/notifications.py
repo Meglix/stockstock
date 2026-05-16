@@ -86,7 +86,7 @@ def get_notifications(
                     "createdAt": row["created_at"],
                     "created_at": row["created_at"],
                     "read": False,
-                    "route": "/dashboard/orders?tab=clients",
+                    "route": "/dashboard/orders?tab=clients&group=needs-review",
                     "relatedId": row["id"],
                     "related_id": row["id"],
                 }
@@ -120,7 +120,7 @@ def get_notifications(
                     "createdAt": row["updated_at"],
                     "created_at": row["updated_at"],
                     "read": False,
-                    "route": "/dashboard/orders?tab=clients",
+                    "route": f"/dashboard/orders?tab=clients&group={'backorders-ready' if is_ready else 'backorders-waiting'}",
                     "relatedId": row["id"],
                     "related_id": row["id"],
                 }
@@ -151,7 +151,7 @@ def get_notifications(
                     "createdAt": created_at,
                     "created_at": created_at,
                     "read": False,
-                    "route": "/dashboard/orders?tab=suppliers",
+                    "route": "/dashboard/orders?tab=suppliers&group=needs-review",
                     "relatedId": row["id"],
                     "related_id": row["id"],
                 }

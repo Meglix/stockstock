@@ -107,3 +107,21 @@ def test_create_stock_rejects_invalid_policy(client):
     assert response.status_code == 422
     detail = response.json()["detail"]
     assert any("optimal_stock must be greater than or equal to safety_stock" in item["msg"] for item in detail)
+
+
+def test_create_stock_rejects_zero_recommended_quantity(client):
+    payload = {
+        "part_id": 1,
+        "location": "WH-C",
+        "current_stock": 2,
+        "reorder_point": 0,
+        "safety_stock": 0,
+        "optimal_stock": 0,
+        "avg_daily_demand_30d": 0,
+    }
+
+    response = client.post("/stock", json=payload)
+
+    assert response.status_code == 422
+    detail = response.json()["detail"]
+    assert any("greater than or equal to 1" in item["msg"] for item in detail)

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { Ban, BadgeCheck, Check, Clock3, PackageCheck, RotateCcw, ShieldCheck, ShoppingCart, Timer, Trash2, TriangleAlert, Truck, X } from "lucide-react";
@@ -111,6 +111,7 @@ export function Orders() {
   const [queryApplied, setQueryApplied] = useState(false);
   const [submittingOrder, setSubmittingOrder] = useState(false);
   const [approvalWarning, setApprovalWarning] = useState<{ order: ClientOrder; shortages: ClientOrderAvailabilityShortage[] } | null>(null);
+  const scrollRestoreTimer = useRef<number | null>(null);
 
   const suppliers = useMemo(() => Array.from(new Set(products.map((product) => product.supplier))).filter(Boolean), [products]);
   const supplierProducts = useMemo(() => products.filter((product) => product.supplier === selectedSupplier), [products, selectedSupplier]);
@@ -162,6 +163,15 @@ export function Orders() {
     });
   };
 
+  const preserveScrollAfter = async (action: () => Promise<void>) => {
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    if (scrollRestoreTimer.current) window.clearTimeout(scrollRestoreTimer.current);
+    await action();
+    window.requestAnimationFrame(() => window.scrollTo(scrollX, scrollY));
+    scrollRestoreTimer.current = window.setTimeout(() => window.scrollTo(scrollX, scrollY), 120);
+  };
+
   useEffect(() => {
     const tab = params.get("tab");
     if (tab === "suppliers" || tab === "clients") setActiveTab(tab);
@@ -211,7 +221,7 @@ export function Orders() {
         setApprovalWarning({ order, shortages: preview.shortages });
         return;
       }
-      await approveClientOrder(order.id);
+      await preserveScrollAfter(() => approveClientOrder(order.id));
     } catch (error) {
       console.warn("Could not preview client order stock availability", error);
     }
@@ -221,11 +231,11 @@ export function Orders() {
     if (!approvalWarning) return;
     const orderId = approvalWarning.order.id;
     setApprovalWarning(null);
-    await approveClientOrder(orderId);
+    await preserveScrollAfter(() => approveClientOrder(orderId));
   };
 
   const renderClientOrder = (order: ClientOrder) => (
-    <div key={order.id} className="client-order-card">
+    <motion.div layout="position" key={order.id} className="client-order-card">
       <div className="min-w-0">
         <div className="flex flex-wrap items-center gap-2">
           <span className="sku-chip">{order.id}</span>
@@ -244,26 +254,26 @@ export function Orders() {
           <>
             <div className="grid grid-cols-2 gap-2">
               <button className="primary-button min-h-10 px-3 py-2 text-sm" onClick={() => requestClientApproval(order)}><Check size={15} /> Approve</button>
-              <button className="danger-action" onClick={() => void denyClientOrder(order.id)}><X size={15} /> Deny</button>
+              <button className="danger-action" onClick={() => void preserveScrollAfter(() => denyClientOrder(order.id))}><X size={15} /> Deny</button>
             </div>
             <div className="grid grid-cols-[1fr_auto] gap-2">
               <input className="time-input" type="time" value={scheduleTimes[order.id] ?? defaultSoonTime()} onChange={(event) => setScheduleTimes((current) => ({ ...current, [order.id]: event.target.value }))} />
-              <button className="secondary-action" onClick={() => void scheduleClientOrder(order.id, scheduleTimes[order.id] ?? defaultSoonTime())}><Clock3 size={15} /> Schedule</button>
+              <button className="secondary-action" onClick={() => void preserveScrollAfter(() => scheduleClientOrder(order.id, scheduleTimes[order.id] ?? defaultSoonTime()))}><Clock3 size={15} /> Schedule</button>
             </div>
           </>
         ) : null}
         {order.status === "Approved" && order.fulfillmentStatus === "ready" ? (
-          <button className="primary-button min-h-10 px-3 py-2 text-sm" onClick={() => void completeClientOrder(order.id)}>
+          <button className="primary-button min-h-10 px-3 py-2 text-sm" onClick={() => void preserveScrollAfter(() => completeClientOrder(order.id))}>
             <PackageCheck size={15} />
             Complete order
           </button>
         ) : null}
       </div>
-    </div>
+    </motion.div>
   );
 
   const renderSupplierOrder = (order: SupplierOrder) => (
-    <div key={order.id} className="order-history-row">
+    <motion.div layout="position" key={order.id} className="order-history-row">
       <div className="min-w-0">
         <div className="flex flex-wrap items-center gap-2">
           <span className="sku-chip">{order.id}</span>
@@ -283,15 +293,15 @@ export function Orders() {
       </div>
       {order.status === "Delivered" && !order.stockApplied ? (
         <div className="flex flex-col gap-2 sm:min-w-[240px]">
-          <button className="primary-button min-h-10 px-3 py-2 text-sm" onClick={() => void receiveSupplierDelivery(order.id)}><PackageCheck size={15} /> Receive delivery</button>
+          <button className="primary-button min-h-10 px-3 py-2 text-sm" onClick={() => void preserveScrollAfter(() => receiveSupplierDelivery(order.id))}><PackageCheck size={15} /> Receive delivery</button>
           <div className="grid grid-cols-[1fr_auto] gap-2">
             <input className="time-input" type="time" value={postponeTimes[order.id] ?? defaultSoonTime()} onChange={(event) => setPostponeTimes((current) => ({ ...current, [order.id]: event.target.value }))} />
-            <button className="secondary-action" onClick={() => void postponeSupplierDelivery(order.id, postponeTimes[order.id] ?? defaultSoonTime())}><Clock3 size={15} /></button>
+            <button className="secondary-action" onClick={() => void preserveScrollAfter(() => postponeSupplierDelivery(order.id, postponeTimes[order.id] ?? defaultSoonTime()))}><Clock3 size={15} /></button>
           </div>
-          <button className="danger-action" onClick={() => void refuseSupplierDelivery(order.id)}><X size={15} /> Refuse</button>
+          <button className="danger-action" onClick={() => void preserveScrollAfter(() => refuseSupplierDelivery(order.id))}><X size={15} /> Refuse</button>
         </div>
       ) : null}
-    </div>
+    </motion.div>
   );
 
   return (

@@ -8,6 +8,16 @@ def test_get_parts_returns_seeded_part(client):
     assert data[0]["supplier_id"] == "SUP-TEST"
 
 
+def test_catalog_uses_category_recommended_default_without_stock(client):
+    response = client.get("/parts/catalog")
+
+    assert response.status_code == 200
+    data = response.json()
+    item = next(part for part in data if part["sku"] == "PART-001")
+    assert item["category"] == "Brakes"
+    assert item["recommended"] == 25
+
+
 def test_create_update_delete_part(client):
     create_payload = {
         "sku": "PART-NEW-01",

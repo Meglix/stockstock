@@ -18,7 +18,7 @@ const availabilityLabels: Record<AvailabilityFilter, string> = {
   "order-only": "Order only",
 };
 
-function removeFromList(values: string[], value: string) {
+function removeFromList<T extends string>(values: T[], value: T) {
   return values.filter((item) => item !== value);
 }
 
@@ -28,15 +28,15 @@ export function Parts() {
   const { products } = useDemoStore();
   const [search, setSearch] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [supplier, setSupplier] = useState("All");
-  const [status, setStatus] = useState<PartStatus | "All">("All");
+  const [selectedSuppliers, setSelectedSuppliers] = useState<string[]>([]);
+  const [selectedStatuses, setSelectedStatuses] = useState<PartStatus[]>([]);
   const [availability, setAvailability] = useState<AvailabilityFilter>("All");
   const [selected, setSelected] = useState<CatalogProduct | null>(null);
   const [queryApplied, setQueryApplied] = useState(false);
 
   const categories = useMemo(() => Array.from(new Set(products.map((part) => part.category))).sort(), [products]);
-  const suppliers = useMemo(() => ["All", ...Array.from(new Set(products.map((part) => part.supplier))).sort()], [products]);
-  const statuses = useMemo<Array<PartStatus | "All">>(() => ["All", "In Stock", "Low Stock", "Critical", "Overstock", "Order Only"], []);
+  const suppliers = useMemo(() => Array.from(new Set(products.map((part) => part.supplier))).sort(), [products]);
+  const statuses = useMemo<Array<PartStatus>>(() => ["In Stock", "Low Stock", "Critical", "Overstock", "Order Only"], []);
 
   useEffect(() => {
     if (queryApplied) return;
@@ -54,15 +54,17 @@ export function Parts() {
         part.category.toLowerCase().includes(term) ||
         part.supplier.toLowerCase().includes(term);
       const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(part.category);
+      const matchesSupplier = selectedSuppliers.length === 0 || selectedSuppliers.includes(part.supplier);
+      const matchesStatus = selectedStatuses.length === 0 || selectedStatuses.includes(part.status);
       const matchesAvailability = availability === "All" || part.availability === availability;
-      return matchesSearch && matchesCategory && (supplier === "All" || part.supplier === supplier) && (status === "All" || part.status === status) && matchesAvailability;
+      return matchesSearch && matchesCategory && matchesSupplier && matchesStatus && matchesAvailability;
     });
-  }, [availability, products, search, selectedCategories, status, supplier]);
+  }, [availability, products, search, selectedCategories, selectedStatuses, selectedSuppliers]);
 
   const activeFilters = [
     ...selectedCategories.map((category) => ({ key: `category-${category}`, label: category, onRemove: () => setSelectedCategories((current) => removeFromList(current, category)) })),
-    supplier !== "All" ? { key: "supplier", label: supplier, onRemove: () => setSupplier("All") } : null,
-    status !== "All" ? { key: "status", label: status, onRemove: () => setStatus("All") } : null,
+    ...selectedSuppliers.map((supplier) => ({ key: `supplier-${supplier}`, label: supplier, onRemove: () => setSelectedSuppliers((current) => removeFromList(current, supplier)) })),
+    ...selectedStatuses.map((status) => ({ key: `status-${status}`, label: status, onRemove: () => setSelectedStatuses((current) => removeFromList(current, status)) })),
     availability !== "All" ? { key: "availability", label: availabilityLabels[availability], onRemove: () => setAvailability("All") } : null,
     search.trim() ? { key: "search", label: `Search: ${search.trim()}`, onRemove: () => setSearch("") } : null,
   ].filter((item): item is { key: string; label: string; onRemove: () => void } => Boolean(item));
@@ -70,13 +72,21 @@ export function Parts() {
   const clearFilters = () => {
     setSearch("");
     setSelectedCategories([]);
-    setSupplier("All");
-    setStatus("All");
+    setSelectedSuppliers([]);
+    setSelectedStatuses([]);
     setAvailability("All");
   };
 
   const toggleCategory = (category: string) => {
     setSelectedCategories((current) => (current.includes(category) ? removeFromList(current, category) : [...current, category]));
+  };
+
+  const toggleSupplier = (supplier: string) => {
+    setSelectedSuppliers((current) => (current.includes(supplier) ? removeFromList(current, supplier) : [...current, supplier]));
+  };
+
+  const toggleStatus = (status: PartStatus) => {
+    setSelectedStatuses((current) => (current.includes(status) ? removeFromList(current, status) : [...current, status]));
   };
 
   const openSupplierOrder = (product: CatalogProduct) => {
@@ -86,30 +96,12 @@ export function Parts() {
   return (
     <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="space-y-5">
       <DataPanel title="Parts Catalog" eyebrow="Local and supplier-order catalog" action={<span className="panel-pill"><PackagePlus size={13} /> {filtered.length} products</span>}>
-        <div className="mb-5 grid grid-cols-1 gap-3 xl:grid-cols-[1.25fr_0.75fr_0.75fr_0.75fr]">
+        <div className="mb-5 grid grid-cols-1 gap-3 xl:grid-cols-[1.25fr_0.75fr]">
           <label className="filter-control">
             <span>Search</span>
             <div className="control-shell">
               <Search size={16} />
               <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Product, SKU, supplier" />
-            </div>
-          </label>
-          <label className="filter-control">
-            <span>Supplier</span>
-            <div className="control-shell">
-              <SlidersHorizontal size={16} />
-              <select value={supplier} onChange={(event) => setSupplier(event.target.value)}>
-                {suppliers.map((item) => <option key={item}>{item}</option>)}
-              </select>
-            </div>
-          </label>
-          <label className="filter-control">
-            <span>Status</span>
-            <div className="control-shell">
-              <span className="h-2 w-2 rounded-full bg-orange-300" />
-              <select value={status} onChange={(event) => setStatus(event.target.value as PartStatus | "All")}>
-                {statuses.map((item) => <option key={item}>{item}</option>)}
-              </select>
             </div>
           </label>
           <label className="filter-control">
@@ -127,28 +119,48 @@ export function Parts() {
           </label>
         </div>
 
-        <div className="mb-5 rounded-xl border border-white/[0.08] bg-white/[0.025] p-3">
-          <div className="mb-3 flex items-center justify-between gap-3">
-            <div>
-              <p className="text-sm font-bold text-white">Categories</p>
-              <p className="mt-1 text-xs text-slate-500">Select one or more product groups.</p>
+        <div className="mb-5 grid grid-cols-1 gap-3 rounded-xl border border-white/[0.08] bg-white/[0.025] p-3 xl:grid-cols-3">
+          <div>
+            <div className="mb-3 flex items-center gap-2 text-sm font-bold text-white"><Filter size={15} /> Categories</div>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => {
+                const active = selectedCategories.includes(category);
+                return (
+                  <button key={category} type="button" onClick={() => toggleCategory(category)} className={`filter-chip ${active ? "filter-chip--active" : ""}`}>
+                    <span className={`h-2 w-2 rounded-full ${active ? "bg-orange-200" : "bg-slate-600"}`} />
+                    {category}
+                  </button>
+                );
+              })}
             </div>
-            {selectedCategories.length ? (
-              <button type="button" className="secondary-action min-h-9 px-3 py-1.5 text-xs" onClick={() => setSelectedCategories([])}>
-                Clear categories
-              </button>
-            ) : null}
           </div>
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => {
-              const active = selectedCategories.includes(category);
-              return (
-                <button key={category} type="button" onClick={() => toggleCategory(category)} className={`filter-chip ${active ? "filter-chip--active" : ""}`}>
-                  <span className={`h-2 w-2 rounded-full ${active ? "bg-orange-200" : "bg-slate-600"}`} />
-                  {category}
-                </button>
-              );
-            })}
+          <div>
+            <div className="mb-3 flex items-center gap-2 text-sm font-bold text-white"><SlidersHorizontal size={15} /> Suppliers</div>
+            <div className="flex flex-wrap gap-2">
+              {suppliers.map((supplier) => {
+                const active = selectedSuppliers.includes(supplier);
+                return (
+                  <button key={supplier} type="button" onClick={() => toggleSupplier(supplier)} className={`filter-chip ${active ? "filter-chip--active" : ""}`}>
+                    <span className={`h-2 w-2 rounded-full ${active ? "bg-orange-200" : "bg-slate-600"}`} />
+                    {supplier}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <div className="mb-3 flex items-center gap-2 text-sm font-bold text-white"><span className="h-2 w-2 rounded-full bg-orange-300" /> Status</div>
+            <div className="flex flex-wrap gap-2">
+              {statuses.map((status) => {
+                const active = selectedStatuses.includes(status);
+                return (
+                  <button key={status} type="button" onClick={() => toggleStatus(status)} className={`filter-chip ${active ? "filter-chip--active" : ""}`}>
+                    <span className={`h-2 w-2 rounded-full ${active ? "bg-orange-200" : "bg-slate-600"}`} />
+                    {status}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 

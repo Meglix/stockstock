@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "motion/react";
-import { ForecastHorizon, ForecastPoint, forecastHorizons } from "../data/forecasting";
+import { ForecastHorizon, ForecastPoint, displayPointDate, forecastHorizons } from "../data/forecasting";
 
 type HoverPoint = ForecastPoint & {
   x: number;
@@ -19,6 +19,7 @@ const chart = {
 };
 
 function makePath(points: Array<{ x: number; y: number }>) {
+  if (points.length < 2) return "";
   return points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ");
 }
 
@@ -36,16 +37,18 @@ export function DemandForecastChart({
   horizon,
   onHorizonChange,
   compact = false,
+  emptyMessage = "Not enough normalized forecast data for this selection.",
 }: {
   points: ForecastPoint[];
   horizon: ForecastHorizon;
   onHorizonChange?: (horizon: ForecastHorizon) => void;
   compact?: boolean;
+  emptyMessage?: string;
 }) {
   const [hover, setHover] = useState<HoverPoint | null>(null);
   const innerWidth = chart.width - chart.left - chart.right;
   const innerHeight = chart.height - chart.top - chart.bottom;
-  const domainValues = points.flatMap((point) => [point.actual ?? 0, point.forecast, point.confidenceHigh]);
+  const domainValues = points.flatMap((point) => [point.actual, point.forecast, point.confidenceHigh]).filter((value): value is number => typeof value === "number" && Number.isFinite(value));
   const maxValue = Math.max(...domainValues, 1);
   const max = Math.ceil((maxValue * 1.12) / 10) * 10;
 
@@ -59,20 +62,23 @@ export function DemandForecastChart({
         ...point,
         x,
         actualY: typeof point.actual === "number" ? mapY(point.actual) : undefined,
-        forecastY: mapY(point.forecast),
-        lowY: mapY(point.confidenceLow),
-        highY: mapY(point.confidenceHigh),
+        forecastY: typeof point.forecast === "number" ? mapY(point.forecast) : undefined,
+        lowY: typeof point.confidenceLow === "number" ? mapY(point.confidenceLow) : undefined,
+        highY: typeof point.confidenceHigh === "number" ? mapY(point.confidenceHigh) : undefined,
       };
     });
   }, [innerHeight, innerWidth, max, points]);
 
   const actualPath = makePath(mapped.filter((point) => typeof point.actualY === "number").map((point) => ({ x: point.x, y: point.actualY ?? 0 })));
-  const forecastPath = makePath(mapped.map((point) => ({ x: point.x, y: point.forecastY })));
+  const forecastPoints = mapped.filter((point) => typeof point.forecastY === "number");
+  const forecastPath = makePath(forecastPoints.map((point) => ({ x: point.x, y: point.forecastY ?? 0 })));
+  const confidencePoints = mapped.filter((point) => typeof point.highY === "number" && typeof point.lowY === "number");
   const confidencePath = makeBandPath(
-    mapped.map((point) => ({ x: point.x, y: point.highY })),
-    mapped.map((point) => ({ x: point.x, y: point.lowY })),
+    confidencePoints.map((point) => ({ x: point.x, y: point.highY ?? 0 })),
+    confidencePoints.map((point) => ({ x: point.x, y: point.lowY ?? 0 })),
   );
   const yTicks = [0.25, 0.5, 0.75, 1].map((ratio) => Math.round(max * ratio));
+  const hasForecastLine = forecastPoints.length >= 2;
 
   return (
     <div className="relative">
@@ -92,7 +98,7 @@ export function DemandForecastChart({
         </div>
       ) : null}
 
-      <div className="overflow-hidden rounded-xl border border-white/[0.08] bg-black/20">
+      <div className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-black/20">
         <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className={compact ? "h-[320px] w-full" : "h-[390px] w-full"} role="img" aria-label="Demand forecast chart">
           <defs>
             <linearGradient id="forecastBand" x1="0" x2="0" y1="0" y2="1">
@@ -162,8 +168,8 @@ export function DemandForecastChart({
             transition={{ duration: 0.75, delay: 0.08 }}
           />
 
-          {mapped.map((point) => (
-            <g key={`hit-${point.label}`}>
+          {mapped.map((point, index) => (
+            <g key={`hit-${point.date ?? point.label}-${index}`}>
               <rect
                 x={point.x - 12}
                 y={chart.top}
@@ -171,15 +177,20 @@ export function DemandForecastChart({
                 height={innerHeight}
                 fill="transparent"
                 className="cursor-crosshair"
-                onMouseEnter={() => setHover({ ...point, y: point.forecastY })}
-                onMouseMove={() => setHover({ ...point, y: point.forecastY })}
+                onMouseEnter={() => setHover({ ...point, y: point.forecastY ?? point.actualY ?? chart.top })}
+                onMouseMove={() => setHover({ ...point, y: point.forecastY ?? point.actualY ?? chart.top })}
                 onMouseLeave={() => setHover(null)}
               />
-              <circle cx={point.x} cy={point.forecastY} r={hover?.label === point.label ? 4.8 : 3.2} fill="#fb923c" opacity="0.95" />
+              {typeof point.forecastY === "number" ? <circle cx={point.x} cy={point.forecastY} r={hover?.label === point.label ? 4.8 : 3.2} fill="#fb923c" opacity="0.95" /> : null}
               {typeof point.actualY === "number" ? <circle cx={point.x} cy={point.actualY} r={hover?.label === point.label ? 4.4 : 3} fill="#7dd3fc" opacity="0.9" /> : null}
             </g>
           ))}
         </svg>
+        {!hasForecastLine ? (
+          <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 rounded-xl border border-orange-300/18 bg-[#090b11]/92 px-4 py-3 text-center text-sm font-semibold text-slate-300 shadow-[0_16px_46px_rgba(0,0,0,0.35)]">
+            {emptyMessage}
+          </div>
+        ) : null}
       </div>
 
       {hover ? (
@@ -189,7 +200,7 @@ export function DemandForecastChart({
           className="pointer-events-none absolute rounded-xl border border-white/10 bg-[#080a10]/95 px-3 py-2 text-sm shadow-[0_16px_46px_rgba(0,0,0,0.45)]"
           style={{ left: `${(hover.x / chart.width) * 100}%`, top: `${(hover.y / chart.height) * 100}%`, transform: "translate(-50%, -112%)" }}
         >
-          <p className="text-xs font-bold uppercase text-slate-500">{hover.label}</p>
+          <p className="text-xs font-bold uppercase text-slate-500">{displayPointDate(hover)}</p>
           <div className="mt-2 space-y-1">
             {typeof hover.actual === "number" ? (
               <p className="flex items-center gap-2 text-xs text-slate-300">
@@ -197,13 +208,13 @@ export function DemandForecastChart({
                 Actual <strong className="text-white">{hover.actual}</strong>
               </p>
             ) : null}
-            <p className="flex items-center gap-2 text-xs text-slate-300">
+            {typeof hover.forecast === "number" ? <p className="flex items-center gap-2 text-xs text-slate-300">
               <span className="h-2 w-2 rounded-full bg-orange-300" />
               Forecast <strong className="text-orange-100">{hover.forecast}</strong>
-            </p>
-            <p className="text-xs text-slate-500">
+            </p> : null}
+            {typeof hover.confidenceLow === "number" && typeof hover.confidenceHigh === "number" ? <p className="text-xs text-slate-500">
               Confidence {hover.confidenceLow}-{hover.confidenceHigh}
-            </p>
+            </p> : null}
           </div>
         </motion.div>
       ) : null}

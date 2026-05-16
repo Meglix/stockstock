@@ -11,7 +11,7 @@ import { KpiCard } from "../components/KpiCard";
 import { StatusBadge } from "../components/StatusBadge";
 import { SupplierMap } from "../components/SupplierMap";
 import { useDemoStore } from "../context/DemoStoreContext";
-import { ForecastHorizon, ForecastPoint, fetchBackendForecastSeries, forecastLocations, getForecastSeries } from "../data/forecasting";
+import { ForecastHorizon, ForecastPoint, fetchBackendForecastSeries, forecastCategoryLabel, forecastLocations, getForecastSeries } from "../data/forecasting";
 import { marketTrends } from "../data/inventory";
 import { readCurrentUserLocation } from "../utils/userLocation";
 
@@ -54,6 +54,8 @@ export function Dashboard() {
     [forecastHorizon, forecastLocationId],
   );
   const forecastPoints = backendForecastPoints.length ? backendForecastPoints : fallbackForecastPoints;
+  const dashboardForecastCategory = forecastCategoryLabel("Winter Fluids");
+  const dashboardForecastLocation = forecastLocations.find((location) => location.id === forecastLocationId)?.city ?? forecastLocationId;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -119,7 +121,10 @@ export function Dashboard() {
       </section>
 
       <section className="grid grid-cols-1 gap-5 xl:grid-cols-[1.25fr_0.75fr]">
-        <DataPanel title="Demand Forecast Outlook" eyebrow="Actual vs forecast demand" action={<span className="panel-pill"><BrainCircuit size={13} /> ML horizon</span>}>
+        <DataPanel title={`Demand forecast for ${dashboardForecastCategory} in ${dashboardForecastLocation}`} eyebrow="Actual vs forecast demand" action={<span className="panel-pill"><BrainCircuit size={13} /> {forecastHorizon} days</span>}>
+          <p className="mb-4 text-sm leading-6 text-slate-500">
+            This chart shows recent actual demand against the selected/default forecast series, not aggregate demand across every category.
+          </p>
           <DemandForecastChart points={forecastPoints} horizon={forecastHorizon} onHorizonChange={setForecastHorizon} compact />
         </DataPanel>
 

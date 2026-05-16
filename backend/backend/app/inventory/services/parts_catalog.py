@@ -8,6 +8,32 @@ from app.inventory.services.user_stock import (
     get_user_stock_rows_for_parts,
 )
 
+CATEGORY_RECOMMENDED_DEFAULTS = {
+    "tires": 35,
+    "battery": 20,
+    "batteries": 20,
+    "brakes": 25,
+    "filters": 30,
+    "wipers": 20,
+    "fluids": 40,
+    "winter_fluids": 40,
+    "winter fluids": 40,
+    "coolant": 40,
+    "lighting": 15,
+    "maintenance": 25,
+    "accessories": 20,
+    "ac_cooling": 20,
+    "ac cooling": 20,
+    "air conditioning": 20,
+}
+
+
+def recommended_default_for_category(category: str | None) -> int:
+    if not category:
+        return 20
+    normalized = category.strip().lower().replace("-", "_")
+    return CATEGORY_RECOMMENDED_DEFAULTS.get(normalized, CATEGORY_RECOMMENDED_DEFAULTS.get(normalized.replace("_", " "), 20))
+
 
 def role_name(current_user: dict) -> str:
     return current_user.get("role_name", current_user.get("role", "user"))
@@ -141,7 +167,10 @@ def part_to_catalog_item(part: sqlite3.Row, stock_rows: list[sqlite3.Row]) -> di
     total_stock = sum(location["current_stock"] for location in locations)
     recommended = sum(location["recommended"] for location in locations)
     if not locations:
-        recommended = max(int(part["min_order_qty"] or 0), 1)
+        recommended = max(
+            int(part["min_order_qty"] or 0),
+            recommended_default_for_category(part["category"]),
+        )
 
     availability = "available" if total_stock > 0 else "order-only"
     preferred_location = locations[0] if locations else None
