@@ -2,18 +2,18 @@
 
 This project is split into two independent folders:
 
-- Backend: `backend`
-- Frontend: sibling folder `..\frontend-master`
+- Backend app: `backend\backend`
+- Frontend app: `frontend`
 
-The frontend talks to the backend through relative `/api/...` calls. `frontend-master\next.config.mjs` rewrites those calls to `http://localhost:8000` by default, so the frontend should not import backend files or use absolute filesystem paths.
+The frontend talks to the backend through relative `/api/...` calls. `frontend\next.config.mjs` rewrites those calls to `http://localhost:8000` by default, so the frontend should not import backend files or use absolute filesystem paths.
 
 ## 1. Start Backend
 
 Open PowerShell:
 
 ```powershell
-cd backend
-.\venv\Scripts\Activate.ps1
+cd backend\backend
+..\venv\Scripts\Activate.ps1
 py -m uvicorn app.main:app --reload
 ```
 
@@ -26,7 +26,7 @@ Backend URLs:
 The active database is:
 
 ```text
-backend\database\stock_optimizer.db
+backend\backend\database\stock_optimizer.db
 ```
 
 Do not use older copies from AppData or other folders when demonstrating live DB changes.
@@ -36,7 +36,7 @@ Do not use older copies from AppData or other folders when demonstrating live DB
 Open a second PowerShell:
 
 ```powershell
-cd ..\frontend-master
+cd frontend
 npm install
 npm run dev
 ```
@@ -57,14 +57,14 @@ npm run dev
 Backend:
 
 ```powershell
-cd backend
+cd backend\backend
 py -B -c "import ast, pathlib; ast.parse(pathlib.Path('app/main.py').read_text()); print('backend syntax ok')"
 ```
 
 Frontend:
 
 ```powershell
-cd ..\frontend-master
+cd frontend
 npm exec tsc -- --noEmit
 ```
 
@@ -93,7 +93,7 @@ py -m uvicorn app.main:app --reload
 Only reset when you intentionally want a clean demo database:
 
 ```powershell
-cd backend
+cd backend\backend
 py scripts\init_db.py --reset
 py scripts\seed_data.py --reset
 ```

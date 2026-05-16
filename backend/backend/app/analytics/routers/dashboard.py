@@ -7,7 +7,14 @@ from app.analytics.services.dashboard import (
     get_sales_flow,
     get_supplier_map,
 )
-from app.analytics.services.ml_client import resolved_location_id, safe_ml_service_get
+from app.analytics.services.ml_client import (
+    build_mock_forecast_rows,
+    forecast_source_horizon,
+    normalize_forecast_rows,
+    read_forecast_csv,
+    resolved_location_id,
+    safe_ml_service_get,
+)
 from app.core.auth import require_authenticated_user
 from app.db import get_connection
 
@@ -92,21 +99,61 @@ def dashboard_ml_forecast(
     limit: int = Query(200, ge=1, le=2000),
 ):
     location_id = resolved_location_id(current_user, location)
+    source_horizon = forecast_source_horizon(horizon)
     items, error = safe_ml_service_get(
         "/forecast",
         params={
             "sku": sku,
             "location_id": location_id,
-            "horizon": horizon,
+            "horizon": source_horizon,
             "limit": limit,
         },
     )
+    normalized_items = normalize_forecast_rows(
+        items,
+        requested_sku=sku,
+        requested_location=location_id,
+        requested_horizon=horizon,
+        limit=limit,
+    )
+    if normalized_items:
+        return {
+            "available": True,
+            "source": "ml-service",
+            "location_id": location_id,
+            "requested_horizon": horizon,
+            "source_horizon": source_horizon,
+            "items": normalized_items,
+            "error": None,
+        }
+
+    csv_items, csv_error = read_forecast_csv(
+        sku=sku,
+        location_id=location_id,
+        requested_horizon=horizon,
+        source_horizon=source_horizon,
+        limit=limit,
+    )
+    if csv_items:
+        return {
+            "available": True,
+            "source": "ml-csv-fallback",
+            "location_id": location_id,
+            "requested_horizon": horizon,
+            "source_horizon": source_horizon,
+            "items": csv_items,
+            "error": f"ML service unavailable or empty: {error}" if error else "ML service returned no matching forecast rows.",
+        }
+
+    fallback_error = error or csv_error or "No ML forecast rows matched the request."
     return {
-        "available": error is None,
-        "source": "ml-service",
+        "available": False,
+        "source": "mock-fallback",
         "location_id": location_id,
-        "items": items if isinstance(items, list) else [],
-        "error": error,
+        "requested_horizon": horizon,
+        "source_horizon": source_horizon,
+        "items": build_mock_forecast_rows(sku=sku, location_id=location_id, horizon=horizon, limit=limit),
+        "error": fallback_error,
     }
 
 

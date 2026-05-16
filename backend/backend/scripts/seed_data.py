@@ -119,6 +119,7 @@ def seed_users(cursor, now):
     cursor.execute("SELECT id FROM roles WHERE role_name = 'user'")
     user_role_id = cursor.fetchone()["id"]
 
+    admin_email = os.getenv("INITIAL_ADMIN_EMAIL", "admin@stockoptimizer.local")
     admin_password = os.getenv("INITIAL_ADMIN_PASSWORD")
     if not admin_password:
         raise RuntimeError("INITIAL_ADMIN_PASSWORD must be set before seeding the admin user.")
@@ -127,7 +128,7 @@ def seed_users(cursor, now):
         INSERT OR IGNORE INTO users (full_name, company, username, email, location_id, password_hash, role_id, created_at, updated_at)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
-        ("Admin User", "RRParts", "admin", "admin@stockoptimizer.local", None, hash_password(admin_password), admin_role_id, now, now),
+        ("Admin User", "RRParts", "admin", admin_email, None, hash_password(admin_password), admin_role_id, now, now),
     )
 
     demo_user_password = os.getenv("DEMO_USER_PASSWORD", "DemoPass123!")

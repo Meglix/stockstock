@@ -1,4 +1,18 @@
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+BACKEND_DIR = BASE_DIR.parent
+
+for env_file in (BACKEND_DIR / ".env", BASE_DIR / ".env"):
+    if env_file.exists():
+        load_dotenv(env_file, override=False)
+
 from app.db import bootstrap_database_if_needed
 
 # Core routers
@@ -19,9 +33,31 @@ from app.analytics.routers.ml import router as ml_router
 app = FastAPI(title="Stock Optimizer Backend", version="0.1.0")
 
 
+def configured_cors_origins() -> list[str]:
+    raw_origins = os.getenv("BACKEND_CORS_ORIGINS", "").strip()
+    if raw_origins:
+        return [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+
+    return [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:3001",
+        "http://127.0.0.1:3001",
+    ]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=configured_cors_origins(),
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 @app.on_event("startup")
 def startup_tasks():
-	bootstrap_database_if_needed()
+    bootstrap_database_if_needed()
 
 # Register core infrastructure routers
 app.include_router(auth_router)

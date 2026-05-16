@@ -100,7 +100,9 @@ def get_connection():
     if not DATABASE_PATH.exists():
         raise HTTPException(status_code=500, detail="Database file not found. Run scripts/init_db.py")
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = sqlite3.connect(DATABASE_PATH, timeout=10)
+    connection.execute("PRAGMA busy_timeout = 5000")
+    connection.execute("PRAGMA journal_mode = PERSIST")
     connection.execute("PRAGMA foreign_keys = ON")
     connection.row_factory = sqlite3.Row
     return connection

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import { AlertTriangle, ArrowRight, Boxes, BrainCircuit, LayoutGrid, MapPin, Newspaper, Package, ShoppingCart } from "lucide-react";
@@ -11,8 +11,9 @@ import { KpiCard } from "../components/KpiCard";
 import { StatusBadge } from "../components/StatusBadge";
 import { SupplierMap } from "../components/SupplierMap";
 import { useDemoStore } from "../context/DemoStoreContext";
-import { ForecastHorizon, getForecastSeries } from "../data/forecasting";
+import { ForecastHorizon, ForecastPoint, fetchBackendForecastSeries, forecastLocations, getForecastSeries } from "../data/forecasting";
 import { marketTrends } from "../data/inventory";
+import { readCurrentUserLocation } from "../utils/userLocation";
 
 const trendTone: Record<string, string> = {
   High: "border-orange-300/25 bg-orange-400/12 text-orange-200",
@@ -21,9 +22,15 @@ const trendTone: Record<string, string> = {
   Declining: "border-red-300/25 bg-red-400/12 text-red-200",
 };
 
+function locationIdFromCity(city: string) {
+  return forecastLocations.find((location) => location.city === city || location.id === city)?.id ?? "FI_HEL";
+}
+
 export function Dashboard() {
   const router = useRouter();
   const [forecastHorizon, setForecastHorizon] = useState<ForecastHorizon>(14);
+  const [forecastLocationId] = useState(() => locationIdFromCity(readCurrentUserLocation("Helsinki")));
+  const [backendForecastPoints, setBackendForecastPoints] = useState<ForecastPoint[]>([]);
   const { products, stockItems, clientOrders, supplierOrders, dashboardSummary } = useDemoStore();
   const totalAvailable = dashboardSummary?.kpis.total_available_parts ?? products.filter((product) => product.availability === "available").reduce((sum, product) => sum + product.stock, 0);
   const categories = dashboardSummary?.kpis.categories ?? new Set(products.map((product) => product.category)).size;
@@ -36,16 +43,39 @@ export function Dashboard() {
     .slice(0, 5);
   const trendItems = dashboardSummary?.market_trends.length ? dashboardSummary.market_trends : marketTrends;
   const supplierLocations = dashboardSummary?.supplier_locations ?? [];
-  const forecastPoints = useMemo(
+  const fallbackForecastPoints = useMemo(
     () =>
       getForecastSeries({
-        locationId: "RO_BUC",
-        category: "Tires",
-        sku: "PEU-WINTER-TIRE-205",
+        locationId: forecastLocationId,
+        category: "Winter Fluids",
+        sku: "PEU-WF-WINTER-5L",
         horizon: forecastHorizon,
       }),
-    [forecastHorizon],
+    [forecastHorizon, forecastLocationId],
   );
+  const forecastPoints = backendForecastPoints.length ? backendForecastPoints : fallbackForecastPoints;
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    void fetchBackendForecastSeries(
+      {
+        locationId: forecastLocationId,
+        category: "Winter Fluids",
+        sku: "PEU-WF-WINTER-5L",
+        horizon: forecastHorizon,
+      },
+      controller.signal,
+    )
+      .then(({ points }) => {
+        if (!controller.signal.aborted) setBackendForecastPoints(points);
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) setBackendForecastPoints([]);
+      });
+
+    return () => controller.abort();
+  }, [forecastHorizon, forecastLocationId]);
 
   return (
     <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="space-y-6">

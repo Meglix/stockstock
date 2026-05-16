@@ -11,7 +11,7 @@ from app.db import get_connection
 from app.core.user_scope import get_user_location_scope_records
 
 
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "dev-only-change-me")
+JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY") or os.getenv("JWT_SECRET") or "dev-only-change-me"
 JWT_ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_HOURS = 24
 

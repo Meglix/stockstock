@@ -1,19 +1,22 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "motion/react";
 import { BrainCircuit, CalendarDays, MapPin, PackageSearch, Sparkles } from "lucide-react";
 import { DataPanel } from "../components/DataPanel";
 import { DemandForecastChart } from "../components/DemandForecastChart";
 import {
+  BackendForecastResponse,
   ForecastHorizon,
+  ForecastPoint,
   buildForecastInsight,
+  fetchBackendForecastSeries,
   forecastHorizons,
   forecastLocations,
   forecastParts,
+  forecastSourceLabel,
   getForecastCategories,
   getForecastSeries,
-  hasConfiguredMlForecastSource,
 } from "../data/forecasting";
 import { readCurrentUserLocation } from "../utils/userLocation";
 
@@ -31,9 +34,12 @@ export function Forecasting() {
   const categories = useMemo(() => getForecastCategories(), []);
   const selectedPart = forecastParts.find((part) => part.sku === sku) ?? filteredParts[0] ?? forecastParts[0];
   const selectedLocation = forecastLocations.find((location) => location.id === locationId) ?? forecastLocations[0];
-  const hasMlSource = hasConfiguredMlForecastSource();
+  const [backendPoints, setBackendPoints] = useState<ForecastPoint[]>([]);
+  const [forecastResponse, setForecastResponse] = useState<BackendForecastResponse | null>(null);
+  const [forecastError, setForecastError] = useState("");
+  const [forecastLoading, setForecastLoading] = useState(false);
 
-  const points = useMemo(
+  const fallbackPoints = useMemo(
     () =>
       getForecastSeries({
         locationId,
@@ -43,6 +49,42 @@ export function Forecasting() {
       }),
     [category, horizon, locationId, selectedPart.sku],
   );
+  const points = backendPoints.length ? backendPoints : fallbackPoints;
+  const sourceLabel = backendPoints.length ? forecastSourceLabel(forecastResponse) : "Local fallback";
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    setForecastLoading(true);
+    setForecastError("");
+
+    void fetchBackendForecastSeries(
+      {
+        locationId,
+        category,
+        sku: selectedPart.sku,
+        horizon,
+      },
+      controller.signal,
+    )
+      .then(({ points: nextPoints, response }) => {
+        if (controller.signal.aborted) return;
+        setBackendPoints(nextPoints);
+        setForecastResponse(response);
+      })
+      .catch((error) => {
+        if (controller.signal.aborted) return;
+        setBackendPoints([]);
+        setForecastResponse(null);
+        setForecastError(error instanceof Error ? error.message : "Forecast data is unavailable.");
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setForecastLoading(false);
+      });
+
+    return () => controller.abort();
+  }, [category, horizon, locationId, selectedPart.sku]);
+
   const insight = useMemo(
     () =>
       buildForecastInsight(
@@ -74,7 +116,7 @@ export function Forecasting() {
           action={
             <span className="panel-pill">
               <BrainCircuit size={13} />
-              {hasMlSource ? "ML endpoint configured" : "Mock ML-ready data"}
+              {forecastLoading ? "Loading forecast" : sourceLabel}
             </span>
           }
         >
@@ -157,7 +199,7 @@ export function Forecasting() {
               ))}
             </div>
             <p className="mt-4 text-sm leading-6 text-slate-500">
-              The mock adapter is shaped around the ML contract: location, SKU/category, horizon, forecast demand, actual demand, and confidence bands.
+              {forecastResponse?.error && backendPoints.length ? forecastResponse.error : forecastError || "Forecast demand, location, SKU, and confidence bands are aligned with the backend ML contract."}
             </p>
           </DataPanel>
         </div>
